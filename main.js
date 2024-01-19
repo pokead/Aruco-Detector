@@ -2,7 +2,6 @@ const express = require('express');
 const fs = require('fs');
 const multer = require('multer')
 const upload = multer({
-  //dest: 'upload/',
   limits: 4 * 1024 * 1024
 }) 
 const AR = require('./arucojs/src/aruco').AR;
@@ -10,12 +9,7 @@ var pjson = require('./package.json');
 const sharp = require('sharp')
 const app = express();
 const port = 3000;
-/* const {Canvas} = require('skia-canvas')
 
-let canvas = new Canvas(400, 400),
-    {width, height} = canvas,
-    ctx = canvas.getContext("2d");
- */
 
 
 app.use('views', express.static('public'));
@@ -33,52 +27,26 @@ app.get('/', (req, res) => {
 })
 
 
-/* var onMarkerDetectionHandler = function (image, markerList) {
-  var jpegImageData = jpeg.encode(image, 50);
-  fs.writeFile('camera_out.jpg', jpegImageData.data, function (err) {
-    if (err) throw err;
-  });
-  if(markerList.length!=0)
-    console.log(markerList);
-};
- */
-
 
 let decode = async (sourceImg, res) => {
   let decoded = await sharp(sourceImg).raw().toBuffer({ resolveWithObject: true});
-  console.log(decoded)
   const { width, height, channels } = decoded.info;
   
   if (channels === 3) {
     decoded = await sharp(decoded.data, { raw: { width, height, channels }})
     .joinChannel(Buffer.alloc(width * height, 255), { raw: { width, height, channels: 1}})
     .toBuffer( { resolveWithObject: true })
-    //console.log(decoded)
   }
 
   const uint8Array = new Uint8ClampedArray(decoded.data);
   console.log(uint8Array)
   var markers = detector.detectImage(width, height, uint8Array)
-  try{
-    console.log(markers)
-    console.log(markers[0].corners)
-  }catch{
-    markers = 
-    console.log("Mannaggia")
-  }
   res.status(200).json({"markers" : markers});
   return markers;
 }
 
 app.post('/upload', upload.single('file'), (req, res, next) => {
-  //var image = fs.readFileSync("G:/Progetti/node/RestAPI2/aruco5.jpeg")
-  //console.log(req.file)
   decode(req.file.buffer, res)
-  //console.log(req.data)
-  //console.log(req.image)
-  //console.log(req.file)
-  //var markers = detector.detectImage(650, 558, decode(image))
-  //console.log(markers)
 })
 
 /*app.post('/upload', (req, res) => {
