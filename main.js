@@ -44,7 +44,7 @@ app.get('/', (req, res) => {
  */
 
 
-let decode = async (sourceImg) => {
+let decode = async (sourceImg, res) => {
   let decoded = await sharp(sourceImg).raw().toBuffer({ resolveWithObject: true});
   console.log(decoded)
   const { width, height, channels } = decoded.info;
@@ -63,16 +63,17 @@ let decode = async (sourceImg) => {
     console.log(markers)
     console.log(markers[0].corners)
   }catch{
+    markers = 
     console.log("Mannaggia")
   }
-
-  return uint8Array;
+  res.status(200).json({"markers" : markers});
+  return markers;
 }
 
 app.post('/upload', upload.single('file'), (req, res, next) => {
   //var image = fs.readFileSync("G:/Progetti/node/RestAPI2/aruco5.jpeg")
   //console.log(req.file)
-  decode(req.file.buffer)
+  decode(req.file.buffer, res)
   //console.log(req.data)
   //console.log(req.image)
   //console.log(req.file)
