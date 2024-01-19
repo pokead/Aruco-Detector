@@ -1,18 +1,21 @@
 const express = require('express');
 const fs = require('fs');
 const multer = require('multer')
-const upload = multer({ dest: 'uploads/'}) 
+const upload = multer({
+  //dest: 'upload/',
+  limits: 4 * 1024 * 1024
+}) 
 const AR = require('./arucojs/src/aruco').AR;
 var pjson = require('./package.json');
 const sharp = require('sharp')
 const app = express();
 const port = 3000;
-const {Canvas} = require('skia-canvas')
+/* const {Canvas} = require('skia-canvas')
 
 let canvas = new Canvas(400, 400),
     {width, height} = canvas,
     ctx = canvas.getContext("2d");
-
+ */
 
 
 app.use('views', express.static('public'));
@@ -66,12 +69,13 @@ let decode = async (sourceImg) => {
   return uint8Array;
 }
 
-app.post('/upload', (req, res) => {
-  var image = fs.readFileSync("G:/Progetti/node/RestAPI2/aruco5.jpeg")
-  decode(image)
-  console.log(req.data)
-  console.log(req.image)
-  console.log(req.file)
+app.post('/upload', upload.single('file'), (req, res, next) => {
+  //var image = fs.readFileSync("G:/Progetti/node/RestAPI2/aruco5.jpeg")
+  //console.log(req.file)
+  decode(req.file.buffer)
+  //console.log(req.data)
+  //console.log(req.image)
+  //console.log(req.file)
   //var markers = detector.detectImage(650, 558, decode(image))
   //console.log(markers)
 })
