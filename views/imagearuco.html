@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">    
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ArucoAI - Hompage</title>
+  </head>
+  <body>
+    <!--NAVBAR + SIDENAV-->
+    <nav>
+        <div class="nav-wrapper">
+            <a href="index.html" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">ArucoAI</a>
+            <ul id="nav-mobile" style="font-family: 'Montserrat', sans-serif; font-weight: 400;" class="right hide-on-med-and-down">
+              <li><a href="./imagearuco.html">Image Detection</a></li>
+              <li><a href="./streamaruco.html">Streaming Detection</a></li>
+              <li><a href="#">Project</a></li>
+            </ul>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>     
+    </nav>
+    <ul id="slide-out" style="font-family: 'Montserrat', sans-serif; font-weight: 600;" class="sidenav">
+        <li><a href="./imagearuco.html">First Link</a></li>
+        <li><a href="./streamaruco.html">Second Link</a></li>
+        <li><a href="#!">Project</a></li>
+    </ul>
+    <!--FINE NAVBAR + SIDENAV-->
+    <!--FORM-->
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" action="/uploadimage" onsubmit="return false;">
+            <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Carica qui il tuo file:</h4>
+            <div style="margin-top: 10px;">
+              <input type="file" id="file" name="file" accept="image/*" />
+              <label for="file" class="custom-file-upload">Scegli immagine</label>
+              <button class="waves-effect waves-light btn teal darken-4" id="uploadbtn">Scansione</button>
+            </div>
+        </form>
+        <div class="row" style="margin-top: 10px;">
+            <div id="img-preview" class="col l6 m6 s12"></div>
+            <div class="col l6 m6 s12"><img style="width: 100%" src="./img/ciao.jpg" id="result"></div>
+        </div>
+    </div>
+
+    <!--FOOTER-->
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">ArucoAI Detection</h5>
+            <p class="grey-text text-lighten-4"></p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+              <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+        © 2024 Copyright Text
+        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+      </div>
+    </footer>
+    <!--FINE FOOTER-->
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="./js/materialize.js"></script>
+    <script type="module" src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script></script>
+  </body>
+</html>
