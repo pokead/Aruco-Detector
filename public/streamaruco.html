@@ -18,62 +18,35 @@
     <!--NAVBAR + SIDENAV-->
     <nav>
         <div class="nav-wrapper">
-            <a href="index.html" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">ArucoAI</a>
+            <a href="/" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">ArucoAI</a>
             <ul id="nav-mobile" style="font-family: 'Montserrat', sans-serif; font-weight: 400;" class="right hide-on-med-and-down">
-              <li><a href="./imagearuco.html">Image Detection</a></li>
-              <li><a href="./streamaruco.html">Streaming Detection</a></li>
+              <li><a href="./imagearuco">Image Detection</a></li>
+              <li><a href="./streamaruco">Streaming Detection</a></li>
               <li><a href="#">Project</a></li>
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
         </div>     
     </nav>
     <ul id="slide-out" style="font-family: 'Montserrat', sans-serif; font-weight: 600;" class="sidenav">
-        <li><a href="./imagearuco.html">Image Detection</a></li>
-        <li><a href="./streamaruco.html">Stream Detection</a></li>
+        <li><a href="./imagearuco">Image Detection</a></li>
+        <li><a href="./streamaruco">Streaming Detection</a></li>
         <li><a href="#!">Project</a></li>
     </ul>
     <!--FINE NAVBAR + SIDENAV-->
-    <!--Header Custom ArucoAI Projet-->
-    <!--CENTRO-->
-    <div class="header-custom">
-      <div style="text-align: center;">
-        <h1>Aruco Detection</h1>
-      </div>
-      <div class="container row">
-        <!--CARD ARUCO-->
-        <div class="col l6 m6 s12">
-          <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
-              <img class="activator" src="./img/imageimg.svg" style="padding: 20px 60px 0px 60px">
+    <!--FORM-->
+    <div class="container">
+        <form method="post" action="/api/upload">
+            <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Carica qui il tuo file:</h4>
+            <div style="margin-top: 10px;">
+              <input type="text" id="choose-file" name="choose-file" accept="image/*" />
             </div>
-            <div class="card-content">
-              <span class="card-title activator grey-text text-darken-4">Image<i class="material-icons right">more_vert</i></span>
-              <p><a href="imagearuco.html">Clicca qui</a></p>
-            </div>
-            <div class="card-reveal">
-              <span class="card-title grey-text text-darken-4">Image<i class="material-icons right">close</i></span>
-              <p>Servizio che permette di inserire un'immagine contenente Aruco a piacere e restituisce la stessa immagine con un rettangolo nelle stessa posizione dell'Aruco</p>
-            </div>
-          </div>
+        </form>
+        <div class="row" style="margin-top: 10px;">
+            <div id="img-preview" class="col l6 m6 s12"></div>
+            <div class="col l6 m6 s12"><img style="width: 100%" src="./img/ciao.jpg"></div>
         </div>
-        <div class="col l6 m6 s12">
-          <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
-              <img class="activator" src="./img/streamvid.svg" style="padding: 20px 60px 0px 60px">
-            </div>
-            <div class="card-content">
-              <span class="card-title activator grey-text text-darken-4">Stream<i class="material-icons right">more_vert</i></span>
-              <p><a href="streamaruco.html">Clicca qui</a></p>
-            </div>
-            <div class="card-reveal">
-              <span class="card-title grey-text text-darken-4">Stream Image<i class="material-icons right">close</i></span>
-              <p>Servizio che permette di inserire uno stream contenente Aruco e restituisce la stesso stream con un rettangolo nelle stessa posizione dell'Aruco in real time</p>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
-    <!--FINE CARD ARUCO-->
+
     <!--FOOTER-->
     <footer class="page-footer">
       <div class="container">
