@@ -35,14 +35,12 @@
     <!--FINE NAVBAR + SIDENAV-->
     <!--FORM-->
     <div class="container">
-        <form method="post" enctype="multipart/form-data" action="/api/upload" onsubmit="return false;">
-            <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Carica qui il tuo file:</h4>
-            <div style="margin-top: 10px;">
-              <input type="file" id="file" name="file" accept="image/*" />
-              <label for="file" class="custom-file-upload">Scegli immagine</label>
-              <button class="waves-effect waves-light btn teal darken-4" id="uploadbtn">Scansione</button>
-            </div>
-        </form>
+        <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Carica qui il tuo file:</h4>
+        <div style="margin-top: 10px;">
+          <input type="file" id="file" name="file" accept="image/*" />
+          <label for="file" class="custom-file-upload">Scegli immagine</label>
+          <button class="waves-effect waves-light btn teal darken-4" id="uploadbtn">Scansione</button>
+        </div>
         <div class="row" style="margin-top: 10px;">
             <div id="img-preview" class="col l6 m6 s12"></div>
             <div class="col l6 m6 s12"><img style="width: 100%" src="./img/ciao.jpg" id="result"></div>

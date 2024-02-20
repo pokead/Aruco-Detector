@@ -15,6 +15,7 @@ chooseFile.addEventListener('change', event => {
     const reader = new FileReader()
 
     reader.addEventListener('load', e => {
+      imgPreview.innerHTML = ''
       const image = document.createElement('img')
       image.src = e.target.result
       image.style.width = '100%'
@@ -28,19 +29,20 @@ chooseFile.addEventListener('change', event => {
 })
 
 uploadBtn.addEventListener('click', async () => {
-  const files = chooseFile.files[0]
-
-  const formData = new FormData()
-  formData.append('file', files)
-
-  try {
-    const { data } = await axios.post('/api/upload', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
-
-    console.log(data)
-    document.getElementById('result').src = data
-  } catch (error) {
-    console.error(error)
+  const file = chooseFile.files[0]
+  if (file){
+    const formData = new FormData()
+    formData.append('file', file)
+  
+    try {
+      const { data } = await axios.post('/api/upload', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      })
+  
+      console.log(data)
+      document.getElementById('result').src = data
+    } catch (error) {
+      console.error(error)
+    }
   }
 })
