@@ -34,7 +34,7 @@ async function modifyImage(width, height, markers, buffer) {
     ctx.lineTo(marker.corners[0].x, marker.corners[0].y)
     const matrix = ctx.createProjection(quad)
     ctx.setTransform(matrix)
-    ctx.drawImage(image, marker.corners[0].x, marker.corners[0].y)
+    ctx.drawImage(image, 0, 0)
     ctx.resetTransform()
   }
 
