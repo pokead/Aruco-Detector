@@ -6,7 +6,6 @@ const sharp = require("sharp")
 
 async function modifyImage(width, height, markers, buffer) {
   const canvas = new Canvas(width, height),
-    
     ctx = canvas.getContext('2d');
   const img = await loadImage(buffer)
   
@@ -43,28 +42,6 @@ async function modifyImage(width, height, markers, buffer) {
   const result = await canvas.png;
   return result.toString('base64')//canvas.toBuffer('image/png').toString('base64')
 }
-
-
-
-
-
-
-function createProjection2(quad){
-  console.log([quad].flat())
-  let [a, b, c, d, e, f, p0, p1, p2] = quad
-  const matrix = new DOMMatrix(
-    [
-      a, d, 0, p0,
-      b, e, 0, p1,
-      0, 0, 1, 0,
-      c, f, 0, p2
-    ]
-
-  )
-  return matrix
-}
-
-
 
 
 module.exports = modifyImage
