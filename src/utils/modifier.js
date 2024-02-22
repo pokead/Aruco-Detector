@@ -21,7 +21,7 @@ async function modifyImage(width, height, markers, buffer) {
       width: marker.corners[1].x - marker.corners[0].x
     }
 
-    const img = await sharp(fs.readFileSync('./examples/gato.jpeg')).resize(imgOptions).toBuffer()
+    const img = await sharp(fs.readFileSync('./examples/gato.jpeg')).toBuffer() //resize(imgOptions)
     const image = await loadImage(img)
     const quad = [
       marker.corners[0].x, marker.corners[0].y,
@@ -36,6 +36,7 @@ async function modifyImage(width, height, markers, buffer) {
     const matrix = ctx.createProjection(quad)
     ctx.setTransform(matrix)
     ctx.drawImage(image, marker.corners[0].x, marker.corners[0].y)
+    ctx.resetTransform()
   }
 
   ctx.stroke()
