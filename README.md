@@ -4,6 +4,10 @@ Repo che funziona da archivio per il progetto Aruco-Detector, features disponibi
 - Frontend
 - Restapi
 
+Piccoli appunti:
+- Siamo passati a https://github.com/samizdatco/skia-canvas per gestire i canvas con gli aruco, perchè la vecchia lib non disponeva della funzione necessaria per posizionare al di sopra degli aruco le immagini e deformarle a modo.
+
+
 # Restapi
 
 ## Endpoint disponibili:
