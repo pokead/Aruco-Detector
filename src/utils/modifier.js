@@ -15,11 +15,6 @@ async function modifyImage(width, height, markers, buffer) {
   ctx.beginPath()
 
   for (const marker of markers) {
-    const imgOptions = { 
-      height: marker.corners[2].y - marker.corners[0].y,
-      width: marker.corners[1].x - marker.corners[0].x
-    }
-
     const img = await sharp(fs.readFileSync('./examples/gato.jpeg')).toBuffer() //resize(imgOptions)
     const image = await loadImage(img)
     const quad = [
