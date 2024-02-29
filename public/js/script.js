@@ -6,8 +6,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const chooseFile = document.getElementById("file")
 const chooseFile1 = document.getElementById("file1")
+const chooseStreaming = document.getElementById("streaming")
 const imgPreview = document.getElementById("img-preview")
 const uploadBtn = document.getElementById("uploadbtn")
+const streamBtn = document.getElementById("streambtn")
+
 
 chooseFile.addEventListener('change', event => {
   const file = event.target.files[0]
@@ -53,4 +56,11 @@ uploadBtn.addEventListener('click', async () => {
       console.error(error)
     }
   }
+})
+
+
+streamBtn.addEventListener('click', async () => {
+  const stream = chooseStreaming.innerText
+  console.log(stream)
+
 })

@@ -1,4 +1,6 @@
 const { Router } = require('express')
+const express = require('express')
+
 const router = Router()
 
 const multer = require('multer')
@@ -6,6 +8,7 @@ const upload = multer({ limits: 4 * 1024 * 1024 })
 
 const getImageInfos = require('./utils/markers')
 const modifyImage = require('./utils/modifier')
+router.use(express.json())  
 
 router.post('/image', upload.any(), async (req, res) => {
   try {
@@ -32,5 +35,16 @@ router.post('/markers', upload.single('file'), async (req, res) => {
     res.status(500).json({ error })
   }
 })
+
+
+router.post('/streaming', async (req, res) => {
+  try {
+    console.log(req.body.text)
+  } catch (error) {
+    
+  }
+})
+
+
 
 module.exports = router
