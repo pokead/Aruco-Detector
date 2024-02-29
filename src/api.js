@@ -40,6 +40,8 @@ router.post('/markers', upload.single('file'), async (req, res) => {
 router.post('/streaming', async (req, res) => {
   try {
     console.log(req.body.text)
+
+    
   } catch (error) {
     
   }
