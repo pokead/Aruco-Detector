@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 const chooseFile = document.getElementById("file")
+const chooseFile1 = document.getElementById("file1")
 const imgPreview = document.getElementById("img-preview")
 const uploadBtn = document.getElementById("uploadbtn")
 
@@ -30,9 +31,11 @@ chooseFile.addEventListener('change', event => {
 
 uploadBtn.addEventListener('click', async () => {
   const file = chooseFile.files[0]
+  const file1 = chooseFile1.files[0]
   if (file){
     const formData = new FormData()
     formData.append('file', file)
+    formData.append('file1', file1)
   
     try {
       const { data } = await axios.post('/api/image', formData, {
@@ -40,7 +43,12 @@ uploadBtn.addEventListener('click', async () => {
       })
   
       console.log(data)
-      document.getElementById('result').src = data
+      document.getElementById('result').src = data.buffer
+      const div = document.getElementById("corners")
+      div.getElementsByTagName("p")[0].innerHTML = JSON.stringify(data.markers)
+      document.getElementById("corners").style.visibility = "visible"
+
+
     } catch (error) {
       console.error(error)
     }

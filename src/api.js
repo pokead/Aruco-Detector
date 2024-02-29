@@ -7,12 +7,16 @@ const upload = multer({ limits: 4 * 1024 * 1024 })
 const getImageInfos = require('./utils/markers')
 const modifyImage = require('./utils/modifier')
 
-router.post('/image', upload.single('file'), async (req, res) => {
+router.post('/image', upload.any(), async (req, res) => {
   try {
-    const { markers, width, height } = await getImageInfos(req.file)
-    const modifiedImage = await modifyImage(width, height, markers, req.file.buffer)
+    const { markers, width, height } = await getImageInfos(req.files[0])
+    const modifiedImage = await modifyImage(width, height, markers, req.files[0].buffer, req.files[1].buffer)
 
-    res.send('data:image/png;base64,' + modifiedImage)
+    res.send({
+      buffer: 'data:image/png;base64,' + modifiedImage,
+      markers: markers
+    
+    })
   } catch (error) {
     console.error(error)
     res.status(500).json({ error })

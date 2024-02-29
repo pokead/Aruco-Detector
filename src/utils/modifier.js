@@ -4,7 +4,7 @@ const fs = require("fs")
 const sharp = require("sharp")
 
 
-async function modifyImage(width, height, markers, buffer) {
+async function modifyImage(width, height, markers, buffer, replacebuffer) {
   const canvas = new Canvas(width, height),
     ctx = canvas.getContext('2d');
   const img = await loadImage(buffer)
@@ -15,8 +15,8 @@ async function modifyImage(width, height, markers, buffer) {
   ctx.beginPath()
 
   for (const marker of markers) {
-    const img = await sharp(fs.readFileSync('./examples/gato.jpeg')).toBuffer() //resize(imgOptions)
-    const image = await loadImage(img)
+    //const img = await sharp(fs.readFileSync('./examples/gato.jpeg')).toBuffer() //resize(imgOptions)
+    const image = await loadImage(replacebuffer)
     const quad = [
       marker.corners[0].x, marker.corners[0].y,
       marker.corners[1].x, marker.corners[1].y,
