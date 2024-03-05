@@ -1,0 +1,18 @@
+[
+    {
+        "Stream": "http://127.0.0.1:8000",
+        "Name": "debug"
+    },
+    {
+        "Stream": "http://127.0.0.1:8081",
+        "Name": "arucotest"
+    },
+    {
+        "Stream": "http://192.168.112.56:81/stream",
+        "Name": "rpi"
+    },
+    {
+        "Stream": "http://192.168.112.57:81/videostream.cgi?loginuse=admin&loginpas=",
+        "Name": "webcam"
+    }
+]

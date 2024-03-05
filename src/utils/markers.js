@@ -16,7 +16,7 @@ async function getImageInfos(file) {
 
   const uint8Array = new Uint8ClampedArray(data)
   const markers = detector.detectImage(width, height, uint8Array)
-  
+  console.log(markers);
   return { markers, width, height }
 }
 
