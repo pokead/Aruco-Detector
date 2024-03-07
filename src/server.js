@@ -20,11 +20,7 @@ var camera = new MjpegCamera({
     url: "http://127.0.0.1:8000/", //http://127.0.0.1:8000/
     name: "Proxy"
 });
-//console.log(cameras[0])
-//console.log(cameras[0]["Name"])
 for(const cam in cameras){
-    //console.log(cameras[cam]["Name"])
-    //console.log(args[0])
     if(cameras[cam]["Name"] == args[0]){
         camera.url = cameras[cam]["Stream"]
         camera.name = cameras[cam]["Name"]

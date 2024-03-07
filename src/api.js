@@ -1,14 +1,24 @@
 const { Router } = require('express')
 const express = require('express')
-
+const MjpegCamera = require('mjpeg-camera');
+const fs = require('fs')
 const router = Router()
+const WriteStream = require('stream').Writable;
+const unpipe = require('unpipe');
 
 const multer = require('multer')
 const upload = multer({ limits: 4 * 1024 * 1024 })
 
 const getImageInfos = require('./utils/markers')
 const modifyImage = require('./utils/modifier')
+const modifyStream = require('./utils/streaming')
+
 router.use(express.json())  
+
+const boundary = '--boundandrebound'
+const gato = fs.readFileSync("examples\\gato.jpeg")
+
+
 
 router.post('/image', upload.any(), async (req, res) => {
   try {
@@ -37,13 +47,55 @@ router.post('/markers', upload.single('file'), async (req, res) => {
 })
 
 
-router.post('/streaming', async (req, res) => {
+router.get('/streaming', async (req, res) => {
   try {
-    console.log(req.body.text)
-    
-    
+    let link = decodeURIComponent(req.query.stream);
+    console.log(link)
+    var camera = new MjpegCamera({
+      user: '',
+      password: '',
+      url: link, //http://127.0.0.1:8000/
+      name: link
+  })
+
+    camera.start()
+
+    res.writeHead(200, { 'Content-Type': 'multipart/x-mixed-replace; boundary=' + boundary });
+    let ws = new WriteStream({ objectMode: true });
+    ws._write = async function (chunk, enc, next) {
+      var jpeg = chunk.data;
+      var blob = new Blob([jpeg])
+      const form = new FormData();
+      form.append("file", blob, "file");
+
+      const response = axios.post("http://127.0.0.1:3000/api/markers", form, {
+      headers: {
+          "Content-Type": "multipart/form-data",
+      },
+      });
+
+
+      try {
+          const { markers, width, height } = await getImageInfos(jpeg)
+          const modifiedImage = await modifyImage(width, height, markers, jpeg, gato)
+          console.log(modifiedImage)
+          const overlayedImage = await sharp(modifiedImage)
+                .composite([])
+                .toFormat("jpeg", { mozjpeg: true })
+                .toBuffer();
+          res.write(boundary + '\nContent-Type: image/jpeg\nContent-Length: ' + overlayedImage.length + '\n\n')
+          res.write(overlayedImage);
+          //console.log(overlayedImage)
+      } catch (err) {
+
+        console.log(err.message)
+          //console.error('Errore durante la manipolazione del frame:', err.message)
+      }
+
+      next();
+  };
   } catch (error) {
-    
+    console.log(error)
   }
 })
 
