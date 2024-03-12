@@ -76,21 +76,26 @@ router.get('/streaming', async (req, res) => {
       },
       }); */
 
-      console.log("test")
       try {
+          //console.log(jpeg)
           const { markers, width, height } = await getImageInfos(jpeg)
           const modifiedImage = await modifyImage(width, height, markers, jpeg, gato)
           //console.log(modifiedImage)
-          const overlayedImage = await sharp(modifiedImage)
+          const imageBuffer = Buffer.from(modifiedImage, 'base64')
+          console.log(imageBuffer)
+          const overlayedImage = await sharp(imageBuffer)
                 .composite([])
                 .toFormat("jpeg", { mozjpeg: true })
                 .toBuffer();
           res.write(boundary + '\nContent-Type: image/jpeg\nContent-Length: ' + overlayedImage.length + '\n\n')
-          res.write(overlayedImage);
-          //console.log(overlayedImage)
+          res.write(imageBuffer);
+          fs.writeFileSync('test.jpeg', overlayedImage)
+          console.log(overlayedImage)
+          //return overlayedImage
+          
       } catch (err) {
 
-        console.log(err.message)
+        console.log(err)
           //console.error('Errore durante la manipolazione del frame:', err.message)
       }
 
@@ -98,7 +103,6 @@ router.get('/streaming', async (req, res) => {
       //camera.pipe(ws)
   };
       camera.pipe(ws)
-  
   } catch (error) {
     console.log(error)
   }
