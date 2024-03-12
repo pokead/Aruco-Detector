@@ -1,6 +1,7 @@
 const { Router } = require('express')
 const express = require('express')
 const MjpegCamera = require('mjpeg-camera');
+const sharp = require('sharp');
 const fs = require('fs')
 const router = Router()
 const WriteStream = require('stream').Writable;
@@ -16,7 +17,7 @@ const modifyStream = require('./utils/streaming')
 router.use(express.json())  
 
 const boundary = '--boundandrebound'
-const gato = fs.readFileSync("examples\\gato.jpeg")
+const gato = fs.readFileSync("examples/gato.jpeg")
 
 
 
@@ -61,6 +62,7 @@ router.get('/streaming', async (req, res) => {
     camera.start()
 
     res.writeHead(200, { 'Content-Type': 'multipart/x-mixed-replace; boundary=' + boundary });
+    console.log("test2")
     let ws = new WriteStream({ objectMode: true });
     ws._write = async function (chunk, enc, next) {
       var jpeg = chunk.data;
@@ -68,17 +70,17 @@ router.get('/streaming', async (req, res) => {
       const form = new FormData();
       form.append("file", blob, "file");
 
-      const response = axios.post("http://127.0.0.1:3000/api/markers", form, {
+      /* const response = axios.post("http://127.0.0.1:3000/api/markers", form, {
       headers: {
           "Content-Type": "multipart/form-data",
       },
-      });
+      }); */
 
-
+      console.log("test")
       try {
           const { markers, width, height } = await getImageInfos(jpeg)
           const modifiedImage = await modifyImage(width, height, markers, jpeg, gato)
-          console.log(modifiedImage)
+          //console.log(modifiedImage)
           const overlayedImage = await sharp(modifiedImage)
                 .composite([])
                 .toFormat("jpeg", { mozjpeg: true })
@@ -93,10 +95,14 @@ router.get('/streaming', async (req, res) => {
       }
 
       next();
+      //camera.pipe(ws)
   };
+      camera.pipe(ws)
+  
   } catch (error) {
     console.log(error)
   }
+  
 })
 
 
