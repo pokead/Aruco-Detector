@@ -52,6 +52,7 @@ router.get('/streaming', async (req, res) => {
   try {
     let link = decodeURIComponent(req.query.stream);
     console.log(link)
+    //console.log(link)
     var camera = new MjpegCamera({
       user: '',
       password: '',
@@ -62,7 +63,7 @@ router.get('/streaming', async (req, res) => {
     camera.start()
 
     res.writeHead(200, { 'Content-Type': 'multipart/x-mixed-replace; boundary=' + boundary });
-    console.log("test2")
+    //console.log("test2")
     let ws = new WriteStream({ objectMode: true });
     ws._write = async function (chunk, enc, next) {
       var jpeg = chunk.data;
@@ -79,7 +80,7 @@ router.get('/streaming', async (req, res) => {
       try {
           //console.log(jpeg)
           const { markers, width, height } = await getImageInfos(jpeg)
-          const modifiedImage = await modifyImage(width, height, markers, jpeg, gato)
+          const modifiedImage = await modifyImage(width, height, markers, jpeg, jpeg)
           //console.log(modifiedImage)
           const imageBuffer = Buffer.from(modifiedImage, 'base64')
           //console.log(imageBuffer)
@@ -89,7 +90,7 @@ router.get('/streaming', async (req, res) => {
                 .toBuffer();
           res.write(boundary + '\nContent-Type: image/jpeg\nContent-Length: ' + overlayedImage.length + '\n\n')
           res.write(imageBuffer);
-          fs.writeFileSync('test.jpeg', overlayedImage)
+          
           //console.log(overlayedImage)
           //return overlayedImage
           
