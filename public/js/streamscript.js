@@ -23,7 +23,7 @@ streamBtn.addEventListener('click', async () => {
         },
       })
   console.log(data)
-  document.getElementById('result').src = data
+  document.getElementById('result').src = "/api/streaming?stream=" + stream
   
 
 })

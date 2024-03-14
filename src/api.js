@@ -82,7 +82,7 @@ router.get('/streaming', async (req, res) => {
           const modifiedImage = await modifyImage(width, height, markers, jpeg, gato)
           //console.log(modifiedImage)
           const imageBuffer = Buffer.from(modifiedImage, 'base64')
-          console.log(imageBuffer)
+          //console.log(imageBuffer)
           const overlayedImage = await sharp(imageBuffer)
                 .composite([])
                 .toFormat("jpeg", { mozjpeg: true })
@@ -90,7 +90,7 @@ router.get('/streaming', async (req, res) => {
           res.write(boundary + '\nContent-Type: image/jpeg\nContent-Length: ' + overlayedImage.length + '\n\n')
           res.write(imageBuffer);
           fs.writeFileSync('test.jpeg', overlayedImage)
-          console.log(overlayedImage)
+          //console.log(overlayedImage)
           //return overlayedImage
           
       } catch (err) {
