@@ -1,81 +1,140 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">    
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+<html lang="it" translate="no">
+<head> 
+  <!--Import Google Icon Font-->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">    
+  <!--Import materialize.css-->
+  <link type="text/css" rel="stylesheet" href="css/materialize.css" media="screen,projection"/>
+  <link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection"/>
 
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>ArucoAI - Hompage</title>
-  </head>
-  <body>
-    <!--NAVBAR + SIDENAV-->
-    <nav>
-        <div class="nav-wrapper">
-            <a href="/" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">ArucoAI</a>
-            <ul id="nav-mobile" style="font-family: 'Montserrat', sans-serif; font-weight: 400;" class="right hide-on-med-and-down">
-              <li><a href="./chisiamo">Chi siamo</a></li>
-              <li><a href="./imagearuco">Image Detection</a></li>
-              <li><a href="./streamaruco">Streaming Detection</a></li>
-              <li><a href="#">Project</a></li>              
-            </ul>
-            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-        </div>     
-    </nav>
-    <ul id="slide-out" style="font-family: 'Montserrat', sans-serif; font-weight: 600;" class="sidenav">
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ArucoAI - Chi Siamo</title>
+  
+  <style>
+    .custom-text {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 500;
+    }
+  </style>
+  
+  <!-- Aggiunta della favicon -->
+  <link rel="icon" type="image/x-icon" href="https://www.researchgate.net/publication/323864883/figure/fig3/AS:720960680386563@1548901829417/A-typical-ArUco-library-marker.png">
+</head>
+<body>
+  <!--NAVBAR + SIDENAV-->
+  <nav>
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">ArucoAI</a>
+      <ul id="nav-mobile" style="font-family: 'Montserrat', sans-serif; font-weight: 400;" class="right hide-on-med-and-down">
         <li><a href="./chisiamo">Chi siamo</a></li>
         <li><a href="./imagearuco">Image Detection</a></li>
-        <li><a href="./streamaruco">Stream Detection</a></li>
-        <li><a href="#!">Project</a></li>
-    </ul>
-    <!--FINE NAVBAR + SIDENAV-->
-    <!--Header Custom ArucoAI Projet-->
-    <!--CENTRO-->
-    <div class="header-custom">
-      <div style="text-align: center;">
-        <h1>Chi siamo</h1>
-      </div>
-      <div class="container row">
-        <div class="col l6 m6 s12">
-          
+        <li><a href="./streamaruco">Streaming Detection</a></li>
+        <li><a href="#">Project</a></li>              
+      </ul>
+      <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>     
+  </nav>
+  <ul id="slide-out" style="font-family: 'Montserrat', sans-serif; font-weight: 600;" class="sidenav">
+    <li><a href="./chisiamo">Chi siamo</a></li>
+    <li><a href="./imagearuco">Image Detection</a></li>
+    <li><a href="./streamaruco">Stream Detection</a></li>
+    <li><a href="#!">Project</a></li>
+  </ul>
+  <!--FINE NAVBAR + SIDENAV-->
+
+  <!--Header Custom ArucoAI Projet-->
+  <!--CENTRO-->
+  <div class="header-custom">
+    <div class="container">
+      <div class="row">
+        <div class="col s12" style="text-align: center;">
+          <h1>Chi siamo</h1>
+          <div class="description">
+            <main>
+              <section>
+              <h4>Missione</h4>
+              <p class="custom-text">Siamo un gruppo di giovani determinati a esplorare le potenzialità della computer vision e del riconoscimento di ArUco per creare soluzioni innovative e pratiche...</p>
+              </section>
+              
+              <section>
+              <h4>Obiettivi del Progetto</h4>              
+              <li class="custom-text">Implementare un sistema di riconoscimento di ArUco affidabile e preciso.</li>
+              <li class="custom-text">Esplorare le applicazioni pratiche della computer vision nei settori industriali, educativi e di svago.</li>
+              <li class="custom-text">Realizzare un prototipo funzionante che dimostri l'efficacia delle nostre soluzioni.</li>
+              <li class="custom-text">Documentare e condividere il nostro processo di sviluppo per contribuire alla comunità di ricerca e sviluppo.</li>              
+              </section>
+              
+              <section>
+              <h4>Metodologia di Lavoro</h4>
+              <ul>
+              <li class="custom-text">Organizzeremo incontri settimanali nel laboratorio dedicati alla discussione dei progressi, alla risoluzione dei problemi e alla pianificazione delle attività future.</li>
+              <li class="custom-text">Utilizzeremo una metodologia agile per adattarci rapidamente alle sfide incontrate durante lo sviluppo del progetto.</li>
+              <li class="custom-text">Promuoveremo la collaborazione e lo scambio di conoscenze tra i membri del gruppo, incoraggiando l'apprendimento continuo e lo sviluppo personale.</li>
+              </ul>
+              </section>
+              
+              <section>
+              <h4>Membri del Gruppo</h4>
+              <ul>
+              <li class="custom-text">Leonardo:</li>
+              <li class="custom-text">Stefano: </li>
+              <li class="custom-text">Luca:</li>
+              <li class="custom-text">Manuel:</li>
+              <li class="custom-text">Mattia:</li>
+              <li class="custom-text">Luca:</li>
+              <li class="custom-text">Simone:</li>
+              </ul>
+              </section>
+              
+              <section>
+              <h4>Valori del Gruppo</h4>
+              <ul>
+              <li class="custom-text">Collaborazione: Siamo convinti che il successo del nostro progetto dipenda dalla capacità di lavorare insieme come team coeso.</li>
+              <li class="custom-text">Innovazione: Siamo aperti a nuove idee e approcci, pronti a sperimentare e adattare le nostre soluzioni per ottenere i migliori risultati.</li>
+              <li class="custom-text">Trasparenza: Comunicazione aperta e onesta tra i membri del gruppo per favorire la condivisione di conoscenze e l'identificazione tempestiva di eventuali problemi.</li>
+              </ul>
+              </section>
+              </main>
+          </div>
         </div>
       </div>
     </div>
-    <!--FOOTER-->
-    <footer class="page-footer">
+  </div>
+  <!--FINE Header Custom ArucoAI Projet-->
+
+  <!--FOOTER-->
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">ArucoAI Detection</h5>
+          <p class="grey-text text-lighten-4"></p>
+        </div>
+        <div class="col l4 offset-l2 s12">
+          <h5 class="white-text">Links</h5>
+          <ul>
+            <li><a class="grey-text text-lighten-3" href="https://www.ibm.com/it-it/topics/computer-vision" target="_blank">Documentazione Computer Vision</a></li>
+            <li><a class="grey-text text-lighten-3" href="https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html" target="_blank">Documentazione Aruco</a></li>
+            <li><a class="grey-text text-lighten-3" href="https://chev.me/arucogen/" target="_blank">Generatore Aruco</a></li>              
+            <li><a class="grey-text text-lighten-3" href="#!" target="_blank">Link 4</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="footer-copyright">
       <div class="container">
-        <div class="row">
-          <div class="col l6 s12">
-            <h5 class="white-text">ArucoAI Detection</h5>
-            <p class="grey-text text-lighten-4"></p>
-          </div>
-          <div class="col l4 offset-l2 s12">
-            <h5 class="white-text">Links</h5>
-            <ul>
-                <li><a class="grey-text text-lighten-3" href="https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html" target="_blank">Documentazione Aruco</a></li>
-                <li><a class="grey-text text-lighten-3" href="https://chev.me/arucogen/" target="_blank">Generatore Aruco</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!" target="_blank">Documentazione Computer Vision</a></li>
-                <li><a class="grey-text text-lighten-3" href="#!" target="_blank">Link 4</a></li>
-            </ul>
-          </div>
-        </div>
+      © 2024 Copyright Text
+      <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
       </div>
-      <div class="footer-copyright">
-        <div class="container">
-        © 2024 Copyright Text
-        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-        </div>
-      </div>
-    </footer>
-    <!--FINE FOOTER-->
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
-  </body>
+    </div>
+  </footer>
+  <!--FINE FOOTER-->
+
+  <!--JavaScript at end of body for optimized loading-->
+  <script type="text/javascript" src="js/materialize.js"></script>
+</body>
 </html>
