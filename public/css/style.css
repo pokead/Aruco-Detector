@@ -1,6 +1,6 @@
 .navbar-custom {
-    position: relative;
-    left: 50%;
+    position: fixed;
+    top: 0px;
 }
 
 .header-custom {
