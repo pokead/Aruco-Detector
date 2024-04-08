@@ -10,20 +10,14 @@ const imgPreview = document.getElementById("img-preview")
 
 
 streamBtn.addEventListener('click', async () => {
-    const stream = chooseStreaming.value
-    let encodedStreamUrl = encodeURIComponent(stream);
-    console.log(encodedStreamUrl)
-    document.getElementById('input').src = stream
-    //console.log('/api/streaming?stream=' + encodedStreamUrl)
-    
-    let { data } = fetch('/api/streaming?stream=' + encodedStreamUrl, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-      })
-  console.log(data)
-  document.getElementById('result').src = "/api/streaming?stream=" + stream
+
+  const stream = chooseStreaming.value
+  let encodedStreamUrl = encodeURIComponent(stream);
+  console.log("http://0.0.0.0:8000/stream/?link=" + encodedStreamUrl)
+  document.getElementById('input').src = stream
+  //console.log('/api/streaming?stream=' + encodedStreamUrl)
+  //console.log(data)
+  document.getElementById('result').src = "http://0.0.0.0:8000/stream/?link=" + encodedStreamUrl
   
 
 })

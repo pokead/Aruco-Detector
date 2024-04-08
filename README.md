@@ -5,7 +5,13 @@ Repo che funziona da archivio per il progetto Aruco-Detector, features disponibi
 - Restapi
 
 Piccoli appunti:
-- Siamo passati a https://github.com/samizdatco/skia-canvas per gestire i canvas con gli aruco, perchè la vecchia lib non disponeva della funzione necessaria per posizionare al di sopra degli aruco le immagini e deformarle a modo.
+
+- Funzionano solo aruco MIP_36H12.
+
+- Aggiunta l'api in python per lo streaming, quindi non ci sono più i problemi di prestazioni. L'unico problema è che al momento vanno avviate le due app separatemente eseguendo:
+`npm start` e su un altro terminale `python streaming.py`
+
+- ~~Siamo passati a https://github.com/samizdatco/skia-canvas per gestire i canvas con gli aruco, perchè la vecchia lib non disponeva della funzione necessaria per posizionare al di sopra degli aruco le immagini e deformarle a modo.~~
 
 
 # Restapi
