@@ -37,10 +37,8 @@ swaggerRouter.use('./documentation', swaggerUi.serve, swaggerUi.setup(specs));
 
 
 const { Router } = require('express')
-const express = require('express')
 const MjpegCamera = require('mjpeg-camera');
 const sharp = require('sharp');
-const fs = require('fs')
 const router = Router()
 const WriteStream = require('stream').Writable;
 const unpipe = require('unpipe');
