@@ -2,7 +2,7 @@ const express = require('express');
 const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const fs = require('fs');
-
+/*
 const options = {
   swaggerDefinition: {
     openapi: '3.0.0',
@@ -34,7 +34,7 @@ const swaggerRouter = express.Router();
 
 // Rotta per la visualizzazione della documentazione Swagger UI
 swaggerRouter.use('./documentation', swaggerUi.serve, swaggerUi.setup(specs));
-
+*/
 
 const { Router } = require('express')
 const MjpegCamera = require('mjpeg-camera');
