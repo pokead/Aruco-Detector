@@ -1,13 +1,13 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const app = express();
 
-const mainRouter = require('./routes')
-const apiRouter = require('./api')
+const mainRouter = require('./routes');
+const apiRouter = require('./api');
 
-app.use('/api', apiRouter)
-app.use(express.static('public'))
-app.use(express.urlencoded({ extended: true }))
-app.use(express.json())   
-app.use(mainRouter)
+app.use('/api', apiRouter);
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(mainRouter);
 
-app.listen(3000)
+app.listen(3000);

@@ -1,3 +1,41 @@
+const express = require('express');
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
+const fs = require('fs');
+
+const options = {
+  swaggerDefinition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'API Documentation',
+      version: '1.0.0',
+      description: 'Documentation for your Aruco-API',
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server',
+      },
+    ],
+  },
+  apis: ['./api.js'],
+};
+
+const specs = swaggerJsdoc(options);
+
+const docDir = './documentation';
+if (!fs.existsSync(docDir)) {
+  fs.mkdirSync(docDir);
+}
+
+fs.writeFileSync('./documentation/swagger.json', JSON.stringify(specs, null, 2));
+
+const swaggerRouter = express.Router();
+
+// Rotta per la visualizzazione della documentazione Swagger UI
+swaggerRouter.use('./documentation', swaggerUi.serve, swaggerUi.setup(specs));
+
+
 const { Router } = require('express')
 const express = require('express')
 const MjpegCamera = require('mjpeg-camera');
@@ -18,6 +56,7 @@ router.use(express.json())
 
 const boundary = '--boundandrebound'
 const gato = fs.readFileSync("examples/gato.jpeg")
+
 
 
 
