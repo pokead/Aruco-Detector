@@ -41,20 +41,26 @@
       <br>
       <br>
       <br>
-        <h6 style="margin-top: 30px;">Servizio che permette di inserire un'immagine contenente Aruco a piacere e restituisce la stessa immagine con una cornice e un'immagine orientata nella stessa posizione dell'Aruco</h6>
+        <h6 style="margin-top: 30px;">Servizio che permette di inserire un'immagine con un Aruco a piacere e restituisce l'immagine con una cornice e un'immagine orientata come l'Aruco.</h6>
         <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Carica qui i tuoi file:</h4>
-        <div class="row">
-          <div style="margin-top: 10px;" class="col l6 m6 s12">
-            <input type="file" id="file" name="file" accept="image/*" />
-            <label for="file" class="custom-file-upload">Scegli immagine su cui sovrapporre</label>
-            <input type="file" id="file1" name="file1" accept="image/*" />
-            <label for="file1" class="custom-file-upload">Scegli immagine da sovrapporre</label>
-            <button class="waves-effect waves-light btn teal darken-4" id="uploadbtn">Scansiona</button>
+          <div style="margin-top: 10px;" class="row">
+            <div class="col l2 m6 s12" style="">
+              <input type="file" id="file" name="file" accept="image/*" />
+              <label for="file" class="custom-file-upload" style="display:block; margin-top:10pxz">Scegli immagine su cui sovrapporre</label>
+            </div>
+            <div style="" class="col l2 m6 s12">
+              <input type="file" id="file1" name="file1" accept="image/*" />
+              <label for="file1" class="custom-file-upload" style="display:block; margin-top:10px">Scegli immagine da sovrapporre</label>
+            </div>
           </div>
-        </div>
+          <br>
+          <div class="row">  
+            <div class="col l2 row m12 s12">
+              <button class="waves-effect waves-light btn teal darken-4 col s12" id="uploadbtn">Scansiona</button>
+            </div>   
+          </div>
         <div class="row" style="margin-top: 10px;">
-            <div id="img-preview" class="col l6 m6 s12" ></div>
-            <div class="col l6 m6 s12"><img style="width: 100%" src="./img/ciao.jpg" id="result"></div>
+            <div class="col l6 m6 s12 offset-l6 offset-m6"><img style="width: 100%" src="./img/ciao.jpg" id="result"></div>
         </div>
         <div style="visibility: hidden;" id="corners">
           <h4>Vertici: </h4>
