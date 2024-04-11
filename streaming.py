@@ -1,10 +1,11 @@
 import cv2 as cv
 import numpy as np
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse
 from uvicorn.config import Config
 from uvicorn.server import Server
-
+from pydantic import BaseModel
+import base64
 
 app = FastAPI()
 
@@ -17,9 +18,13 @@ server = Server(
     )
 )
 
+class Image(BaseModel):
+    image: str
+
+
 params = cv.aruco.DetectorParameters()  # parametri vari
 params.minMarkerDistanceRate = 0.05
-params.errorCorrectionRate = 0.4
+params.errorCorrectionRate = 0.45
 # dizionario aruco
 dictionary = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_ARUCO_MIP_36H12)
 
@@ -108,6 +113,28 @@ async def video_feed_test(link: str = None):
     return StreamingResponse(
         get_stream(cap), media_type="multipart/x-mixed-replace; boundary=frame"
     )
+
+
+@app.post("/image")
+async def video_feed_test(request: Request):
+    data = await request.json()
+    #print(data["image"])
+    print("Received image")
+    image = base64.b64decode(data["image"])
+    
+    nparr = np.frombuffer(image, np.uint8)
+    nparr = cv.imencode(".jpg", nparr)[1].tobytes()
+    nparr = np.fromstring(nparr, np.uint8)
+    nparr = cv.imdecode(nparr, cv.IMREAD_COLOR)
+    
+    #nparr = cv.imdecode(nparr, cv.IMREAD_COLOR)
+    cv.imshow("Image", nparr)
+    cv.waitKey(0)
+    cv.destroyAllWindows()
+    
+    print(nparr)
+
+
 
 
 # eseguiamo il server
