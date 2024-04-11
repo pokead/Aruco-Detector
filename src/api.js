@@ -3,7 +3,7 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const fs = require('fs');
 
-const options = {
+/* const options = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
@@ -33,7 +33,7 @@ fs.writeFileSync('./documentation/swagger.json', JSON.stringify(specs, null, 2))
 const swaggerRouter = express.Router();
 
 swaggerRouter.use('./documentation', swaggerUi.serve, swaggerUi.setup(specs));
-
+ */
 
 const { Router } = require('express')
 const MjpegCamera = require('mjpeg-camera');

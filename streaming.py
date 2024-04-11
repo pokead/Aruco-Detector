@@ -18,8 +18,8 @@ server = Server(
 )
 
 params = cv.aruco.DetectorParameters()  # parametri vari
-params.minMarkerDistanceRate = 0.025
-params.errorCorrectionRate = 0.6
+params.minMarkerDistanceRate = 0.05
+params.errorCorrectionRate = 0.4
 # dizionario aruco
 dictionary = cv.aruco.getPredefinedDictionary(cv.aruco.DICT_ARUCO_MIP_36H12)
 
