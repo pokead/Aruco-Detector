@@ -1,13 +1,26 @@
+import io
 import cv2 as cv
 import numpy as np
-from fastapi import FastAPI, Request
-from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, Request, APIRouter
+from fastapi.responses import StreamingResponse, Response
+from fastapi.middleware.cors import CORSMiddleware
 from uvicorn.config import Config
 from uvicorn.server import Server
 from pydantic import BaseModel
 import base64
+from PIL import Image
+from PIL.Image import frombytes, frombuffer, open
 
 app = FastAPI()
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # configurazione server
 server = Server(
@@ -115,27 +128,94 @@ async def video_feed_test(link: str = None):
     )
 
 
-@app.post("/image")
-async def video_feed_test(request: Request):
+@app.post("/image/")
+async def image_feed_test(request: Request):
+    #if image is None:
+    #    return "Immagine non valida"
     data = await request.json()
     #print(data["image"])
-    print("Received image")
-    image = base64.b64decode(data["image"])
-    
-    nparr = np.frombuffer(image, np.uint8)
-    nparr = cv.imencode(".jpg", nparr)[1].tobytes()
-    nparr = np.fromstring(nparr, np.uint8)
-    nparr = cv.imdecode(nparr, cv.IMREAD_COLOR)
-    
+    image = data["image"].replace("data:image/jpeg;base64,", "")
+    image = base64.b64decode(image)
+    image = io.BytesIO(image)
+    image = open(image)
+    nparr = np.array(image)
+    frame = nparr
+    replace = nparr  # frame per fare la PiP mode
+    imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
+    corners, ids, rejected = detector.detectMarkers(frame)  # vertici, id
+    if ids is not None:  # se la variabile ids è none significa che non è stato trovato nessun aruco valido
+        for i in range(len(ids)):
+            if len(corners) != 0:
+                for corner in range(4):
+                    # disegna il quadrato sull'aruco (in modi molto discutibili)
+                    frame = cv.line(
+                        frame,
+                        (
+                            int(corners[i][0][corner if corner != 3 else 0][0]),
+                            int(corners[i][0][corner if corner != 3 else 0][1]),
+                        ),
+                        (
+                            int(corners[i][0][corner + 1 if corner != 3 else 3][0]),
+                            int(corners[i][0][corner + 1 if corner != 3 else 3][1]),
+                        ),
+                        (255, 0, 0),
+                        4,
+                    )
+                # dimensioni del frame effettivo da visualizzare
+                height, width = frame.shape[:2]
+                # vertici immagine / frame su che rimpiazza l'aruco
+                pts1 = np.float32(
+                    [[0, 0], [imgwidth, 0], [0, imgheight], [imgwidth, imgheight]]
+                )
+                # vertici aruco
+                pts2 = np.float32(
+                    [
+                        corners[i][0][0],
+                        corners[i][0][1],
+                        corners[i][0][3],
+                        corners[i][0][2],
+                    ]
+                )
+                # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere
+                homography, mask = cv.findHomography(pts1, pts2, cv.RANSAC, 5.0)
+                # homography = cv.getPerspectiveTransform(pts1, pts2)
+                # creiamo una matrice con i vertici messi in prospettiva per l'immagine
+                warpedMat = cv.warpPerspective(replace, homography, (width, height))
+                mask2 = np.zeros(frame.shape, dtype=np.uint8)
+                roi_corners2 = np.int32(corners[i][0])
+                channel_count2 = frame.shape[2]
+                ignore_mask_color2 = (255,) * channel_count2
+                # creiamo una figura nera sull'aruco perchè con opencv non è direttamente piazzabile un'immagine sopra un'altra
+                cv.fillConvexPoly(mask2, roi_corners2, ignore_mask_color2)
+                # con operazioni bit a bit in qualche modo si rimpiazza la figura nera con la nostra immagine
+                mask2 = cv.bitwise_not(mask2)
+                masked_image2 = cv.bitwise_and(frame, mask2)
+                frame = cv.bitwise_or(warpedMat, masked_image2)
+    frame = cv.imencode(".jpg", frame)[1].tobytes()
+    frame = base64.encodebytes(frame)
+    frame = b"data:image/png;base64," + frame
+    return {"buffer": frame}
+    #return frame
+    #return Response(content=frame, media_type="image/jpeg")
+    #print("Received image")
+    #image = base64.b64decode(data["image"])
+    #
+    #nparr = np.frombuffer(image, np.uint8)
+    #nparr = cv.imencode(".jpg", nparr)[1].tobytes()
+    #nparr = np.fromstring(nparr, np.uint8)
     #nparr = cv.imdecode(nparr, cv.IMREAD_COLOR)
-    cv.imshow("Image", nparr)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
-    
-    print(nparr)
+    #
+    ##nparr = cv.imdecode(nparr, cv.IMREAD_COLOR)
+    #cv.imshow("Image", nparr)
+    #cv.waitKey(0)
+    #cv.destroyAllWindows()
+    #
+    #print(nparr)
 
 
-
+@app.post("/test")
+async def test(request: Request):
+    return {"message": "test"}
 
 # eseguiamo il server
 server.run()

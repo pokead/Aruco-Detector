@@ -10,23 +10,39 @@ if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
             video.play()
             canvas.width = video.videoWidth
             canvas.height = video.videoHeight
-            setInterval(function() {
+            setInterval(async function() {
                 canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
+                //console.log(canvas.toDataURL('image/jpeg'))
+                //fetch(
+                //    "http://127.0.0.1:8000/image/?image="+(canvas.toDataURL('image/jpeg')),
+                //    {
+                //        method: "GET"
+                //    }
+                //).then(function (res) { console.log(res)})
+                //console.log("http://127.0.0.1:8000/image/?image="+encodeURI(canvas.toDataURL('image/jpeg')))
+                canvas.getContext('2d').drawImage(
+                    video, 0, 0, canvas.width, canvas.height)
                 fetch('http://127.0.0.1:8000/image', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json',
+                        //'Access-Control-Allow-Origin': "*"
                     },
+                    //mode: "no-cors",
                     body: JSON.stringify({image: canvas.toDataURL('image/jpeg')}),
-                }).then(function (response) {
-                    return response.json()
-                }).then(function (data) {
-                    console.log(data)
-                    if (data.markers) {
-                        // Do something with the markers
-                    }
-                })
-            }, 24)
+                }).then(response => {
+                    return response.json();
+                  }).then(jsonResponse => {
+                    console.log(jsonResponse.buffer);
+                    const image = new Image();
+                    image.src = jsonResponse.buffer;
+                    canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+                    
+                  }).catch (error => {
+                    console.log(error)
+                  })
+                //console.log(await response.json())
+            }, 240)
 
         }
     })
