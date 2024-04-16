@@ -1,4 +1,98 @@
 <!DOCTYPE html>
+<html lang="it" translate="no">
+  <head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">    
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>ArucoAI - Webcam Detector</title>
+    <link rel="icon" type="image/x-icon" href="https://www.researchgate.net/publication/323864883/figure/fig3/AS:720960680386563@1548901829417/A-typical-ArUco-library-marker.png">
+  </head>
+  <body>
+    <!--NAVBAR + SIDENAV-->
+    <nav class="navbar-custom">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">ArucoAI</a>
+            <ul id="nav-mobile" style="font-family: 'Montserrat', sans-serif; font-weight: 400;" class="right hide-on-med-and-down">
+              <li><a href="./chisiamo">Chi siamo</a></li>
+              <li><a href="./imagearuco">Image Detection</a></li>
+              <li><a href="./streamaruco">Streaming Detection</a></li>
+              <li><a href="./webcamaruco">Webcam Detection</a></li>
+              <li><a href="https://github.com/pokead/Aruco-Detector" target="_blank">Project</a></li>
+            </ul>
+            <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        </div>     
+    </nav>
+    <ul id="slide-out" style="font-family: 'Montserrat', sans-serif; font-weight: 600;" class="sidenav">
+        <li><a href="./chisiamo">Chi siamo</a></li>
+        <li><a href="./imagearuco">Image Detection</a></li>
+        <li><a href="./streamaruco">Streaming Detection</a></li>
+        <li><a href="./webcamaruco">Webcam Detection</a></li>
+        <li><a href="https://github.com/pokead/Aruco-Detector" target="_blank">Project</a></li>
+    </ul>
+    <!--FINE NAVBAR + SIDENAV-->
+    <!--Scegli file-->
+    <div class="container">
+      <br>
+      <br>
+      <br>
+          <h6 style="margin-top: 30px;">Servizio che permette di rilevare Aruco usando la tua webcam</h6>
+        <div class="row" style="margin-top: 10px;">
+            <video src="" style="display: none;"></video>
+            <canvas class="real"></canvas>
+            <canvas class="fake" style="display: none;"></canvas>
+        </div>
+    </div>
+
+    <!--FOOTER-->
+    <footer class="page-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col l6 s12">
+            <h5 class="white-text">ArucoAI Detection</h5>
+            <p class="grey-text text-lighten-4"></p>
+          </div>
+          <div class="col l4 offset-l2 s12">
+            <h5 class="white-text">Links</h5>
+            <ul>
+              <li><a class="grey-text text-lighten-3" href="https://www.ibm.com/it-it/topics/computer-vision" target="_blank">Documentazione Computer Vision</a></li>
+              <li><a class="grey-text text-lighten-3" href="https://docs.opencv.org/4.x/d5/dae/tutorial_aruco_detection.html" target="_blank">Documentazione Aruco</a></li>
+              <li><a class="grey-text text-lighten-3" href="https://chev.me/arucogen/" target="_blank">Generatore Aruco</a></li>              
+              <li><a class="grey-text text-lighten-3" href="#!" target="_blank">Link 4</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="footer-copyright">
+        <div class="container">
+        © 2024 Copyright Text
+        <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+      </div>
+    </footer>
+    <!--FINE FOOTER-->
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.js"></script>
+    <script src="js/webcamscript.js"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,8 +103,8 @@
     <video src=""></video>
     <canvas class="real"></canvas>
     <canvas class="fake" style="visibility: hidden;"></canvas>
-    
+
 </body>
 <script src="js/webcamscript.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-</html>
+</html>-->
