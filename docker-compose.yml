@@ -1,0 +1,31 @@
+services:
+  arucorest:
+    image: arucorest
+    container_name: arucorest
+    command: npm start
+    working_dir: /code
+    environment:
+      - SSL_ACTIVE=1
+    networks:
+      - nginx-proxy-manager_default
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile.js
+  arucopy:
+    image: arucopy
+    container_name: arucopy
+    command: python streaming.py
+    working_dir: /codepy
+    environment:
+      - SSL_ACTIVE=1
+    networks:
+      - nginx-proxy-manager_default
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile.py
+
+networks:
+  nginx-proxy-manager_default:
+    external: true
