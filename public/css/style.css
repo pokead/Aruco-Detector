@@ -1,6 +1,7 @@
 .navbar-custom {
     position: fixed;
     top: 0px;
+    z-index: 2;
 }
 
 .header-custom {
@@ -29,6 +30,7 @@ body {
 
 .card{
     margin: 15%;
+    z-index: 1;
 }
   
 .card:hover {
