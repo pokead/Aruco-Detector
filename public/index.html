@@ -11,6 +11,14 @@
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
     <link type="text/css" rel="stylesheet" href="css/style.css"  media="screen,projection"/>
 
+    <!-- Merdaccia di jquery -->
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <!-- Robine javascriptose -->
+    <script defer type="text/javascript" src="/js/materialize.js"></script>
+    <script defer type="text/javascript" src="/js/script.js"></script>
+    <script defer type="text/javascript" src="/js/carousel.js"></script>
+
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>ArucoAI - Hompage</title>
@@ -22,7 +30,7 @@
         <div class="nav-wrapper">
             <a href="/" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: 800;">ArucoAI</a>
             <ul id="nav-mobile" style="font-family: 'Montserrat', sans-serif; font-weight: 400;" class="right hide-on-med-and-down">
-              <li><a href="./chisiamo">Chi siamo</a></li>
+              <li><a href="./chisiamo">Chi siamo?</a></li>
               <li><a href="./imagearuco">Image Detection</a></li>
               <li><a href="./streamaruco">Streaming Detection</a></li>
               <li><a href="./webcamaruco">Webcam Detection</a></li>
@@ -44,43 +52,57 @@
     <div class="header-custom">
       <div style="text-align: center;">
         <h1>Aruco Detection</h1>
+      </div>     
+      <div class="carousel">
+        <div class="carousel-item" style="height: auto">
+          <div class="valign-wrapper">
+            <div class="card" style="height: 450px; width: 500px">
+              <div class="card-image waves-effect waves-block waves-light">
+                <a href="imagearuco"><img class="activator" src="./img/imageimg.svg" style="padding: 20px 60px 0px 60px"></a>
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Image<i class="material-icons right">more_vert</i></span>
+                <p><a href="imagearuco">Clicca qui</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="valign-wrapper row">
+            <div class="card" style="height: 450px; width: 500px">
+              <div class="card-image waves-effect waves-block waves-light">
+                <a href="streamaruco"><img class="activator" src="./img/streamvid.svg" style="padding: 20px 60px 0px 60px"></a>
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Stream<i class="material-icons right">more_vert</i></span>
+                <p><a href="streamaruco">Clicca qui</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="col l6 m6 s12 valign-wrapper">
+            <div class="card" style="height: 450px; width: 500px">
+              <div class="card-image waves-effect waves-block waves-light">
+                <a href="webcamaruco"><img class="activator" src="./img/webcamweb.png" style="padding: 20px 60px 0px 60px"></a>
+              </div>
+              <div class="card-content">
+                <span class="card-title activator grey-text text-darken-4">Webcam<i class="material-icons right">more_vert</i></span>
+                <p><a href="webcamaruco">Clicca qui</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="container row">
-        <!--CARD ARUCO-->
-        <div class="col l6 m6 s12">
-          <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
-              <a href="imagearuco"><img class="activator" src="./img/imageimg.svg" style="padding: 20px 60px 0px 60px"></a>
-            </div>
-            <div class="card-content">
-              <span class="card-title activator grey-text text-darken-4">Image<i class="material-icons right">more_vert</i></span>
-              <p><a href="imagearuco">Clicca qui</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col l6 m6 s12">
-          <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
-              <a href="streamaruco"><img class="activator" src="./img/streamvid.svg" style="padding: 20px 60px 0px 60px"></a>
-            </div>
-            <div class="card-content">
-              <span class="card-title activator grey-text text-darken-4">Stream<i class="material-icons right">more_vert</i></span>
-              <p><a href="streamaruco">Clicca qui</a></p>
-            </div>
-          </div>
-        </div>
-        <div class="col l6 m6 s12">
-          <div class="card">
-            <div class="card-image waves-effect waves-block waves-light">
-              <a href="webcamaruco"><img class="activator" src="./img/streamvid.svg" style="padding: 20px 60px 0px 60px"></a>
-            </div>
-            <div class="card-content">
-              <span class="card-title activator grey-text text-darken-4">Webcam<i class="material-icons right">more_vert</i></span>
-              <p><a href="webcamaruco">Clicca qui</a></p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
+      
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.carousel');
+        var instances = M.Carousel.init(elems, options);
+      });
+      </script>
+
     </div>
     <!--FINE CARD ARUCO-->
     <!--FOOTER-->
@@ -110,8 +132,5 @@
       </div>
     </footer>
     <!--FINE FOOTER-->
-    <!--JavaScript at end of body for optimized loading-->
-    <script type="text/javascript" src="js/materialize.js"></script>
-    <script type="text/javascript" src="js/script.js"></script>
   </body>
 </html>

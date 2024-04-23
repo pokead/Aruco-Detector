@@ -11,7 +11,6 @@ const imgPreview = document.getElementById("img-preview")
 const uploadBtn = document.getElementById("uploadbtn")
 const streamBtn = document.getElementById("streambtn")
 
-
 chooseFile.addEventListener('change', event => {
   const file = event.target.files[0]
 
