@@ -135,13 +135,28 @@ async def image_feed_test(request: Request):
     data = await request.json()
     #print(data["image"])
     image = data["image"].replace("data:image/jpeg;base64,", "")
+    stream = data["stream"]
     image = base64.b64decode(image)
     image = io.BytesIO(image)
     image = open(image)
     nparr = np.array(image)
     frame = nparr
     frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
-    replace = frame  # frame per fare la PiP mode
+    replace = frame
+    """ if stream == "":
+        replace = frame  # frame per fare la PiP mode
+    else:
+        replace = frame
+        return
+        cap = cv.VideoCapture(stream)
+        if cap.isOpened():
+            ret, stream_frame = cap.read()  # prendiamo i singoli frame
+            if not ret:
+                print("Stream broken")
+                cap.release()
+                return
+            replace = stream_frame
+            cap.release() """
     imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
     corners, ids, rejected = detector.detectMarkers(frame)  # vertici, id
     if ids is not None:  # se la variabile ids è none significa che non è stato trovato nessun aruco valido

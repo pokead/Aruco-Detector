@@ -46,6 +46,9 @@
           <h6 style="margin-top: 30px;">Servizio che permette di rilevare Aruco usando la tua webcam</h6>
         <div class="row" style="margin-top: 10px;">
             <video src="" style="display: none;"></video>
+            <h6 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Incolla l'URL della stream da sovrapporre (se non viene inserito nessun url si verificherà una PiP):</h6>  
+            <input type="url" id="streaming" name="streaming" class="col s12 m12 l10" />
+            <button class="waves-effect waves-light btn teal darken-4 col s12 m4 l2 offset-m4" id="webcambtn">Avvia webcam</button>  
             <canvas class="real"></canvas>
             <canvas class="fake" style="display: none;"></canvas>
         </div>
