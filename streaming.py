@@ -140,7 +140,8 @@ async def image_feed_test(request: Request):
     image = open(image)
     nparr = np.array(image)
     frame = nparr
-    replace = nparr  # frame per fare la PiP mode
+    frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
+    replace = frame  # frame per fare la PiP mode
     imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
     corners, ids, rejected = detector.detectMarkers(frame)  # vertici, id
     if ids is not None:  # se la variabile ids è none significa che non è stato trovato nessun aruco valido
@@ -168,6 +169,7 @@ async def image_feed_test(request: Request):
                     [[0, 0], [imgwidth, 0], [0, imgheight], [imgwidth, imgheight]]
                 )
                 # vertici aruco
+                #print(corners[i][0][0] * 10)
                 pts2 = np.float32(
                     [
                         corners[i][0][0],
@@ -178,9 +180,11 @@ async def image_feed_test(request: Request):
                 )
                 # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere
                 homography, mask = cv.findHomography(pts1, pts2, cv.RANSAC, 5.0)
+                #cv.resize(homography, ())
                 # homography = cv.getPerspectiveTransform(pts1, pts2)
                 # creiamo una matrice con i vertici messi in prospettiva per l'immagine
                 warpedMat = cv.warpPerspective(replace, homography, (width, height))
+                print(frame.shape)
                 mask2 = np.zeros(frame.shape, dtype=np.uint8)
                 roi_corners2 = np.int32(corners[i][0])
                 channel_count2 = frame.shape[2]
