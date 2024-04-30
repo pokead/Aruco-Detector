@@ -38,9 +38,9 @@ uploadBtn.addEventListener('click', async () => {
     const formData = new FormData()
     formData.append('file', file)
     formData.append('file1', file1)
-  
+    console.log(formData)
     try {
-      const { data } = await axios.post('/api/image', formData, {
+      const { data } = await axios.post('http://127.0.0.1:8000/imagearuco', formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       })
   

@@ -46,7 +46,8 @@ webcamBtn.addEventListener('click', async () => {
                         body: JSON.stringify(
                             {
                                 image: fake.toDataURL('image/jpeg'),
-                                    stream: user_stream
+                                replace: user_stream,
+                                replace_type: "stream"
                             }),
                     }).then(response => {
                         return response.json();
