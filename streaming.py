@@ -33,6 +33,9 @@ server = Server(
     )
 )
 
+
+streaming_dict = {}
+
 class Image(BaseModel):
     image: str
 
@@ -128,6 +131,17 @@ async def video_feed_test(link: str = None):
     return StreamingResponse(
         get_stream(cap), media_type="multipart/x-mixed-replace; boundary=frame"
     )
+
+@app.get("/startstream/")
+async def new_stream(link: str = None):
+    streaming_dict[link] = ""
+    cap = cv.VideoCapture(link)
+    while cap.isOpened():
+        ret, frame = cap.read()  # prendiamo i singoli frame
+        streaming_dict[link] = frame
+        if not ret:
+            print("Stream broken")
+            break
 
 
 @app.post("/image/")
@@ -303,6 +317,11 @@ async def image_aruco(file: UploadFile, file1: UploadFile):
     frame = base64.encodebytes(frame)
     frame = b"data:image/png;base64," + frame
     return {"buffer": frame}
+
+
+
+
+# creare una funzione che legge lo streaming, butta l'ultimo frame in una global var e dall'endpoint image uso quella global var come replace
 
 @app.post("/test")
 async def test(request: Request):
