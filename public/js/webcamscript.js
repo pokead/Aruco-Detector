@@ -10,6 +10,20 @@ webcamBtn.addEventListener('click', async () => {
         navigator.mediaDevices.getUserMedia({video: true})
         .then(function (stream) {
             let user_stream = chooseStreaming.value
+            let encodedStreamUrl = encodeURIComponent(stream);
+            fetch('http://127.0.0.1:8000/startstream', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    //'Access-Control-Allow-Origin': "*"
+                },
+                //mode: "no-cors",
+                body: JSON.stringify(
+                    {
+                        link: user_stream
+                    }),
+            })
+
             //let encodedStreamUrl = encodeURIComponent(stream);
             video.srcObject = stream
             video.onloadedmetadata = function(e) {
