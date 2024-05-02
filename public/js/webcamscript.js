@@ -23,6 +23,7 @@ webcamBtn.addEventListener('click', async () => {
                         link: user_stream
                     }),
             })
+
             //let encodedStreamUrl = encodeURIComponent(stream);
             video.srcObject = stream
             video.onloadedmetadata = function(e) {

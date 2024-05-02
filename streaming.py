@@ -54,14 +54,24 @@ detector = cv.aruco.ArucoDetector(dictionary=dictionary, detectorParams=params)
 # imgheight, imgwidth = replace.shape[:2]
 
 
-def get_stream(cap):
+def get_stream(cap, replace_stream, link):
     while cap.isOpened():
+        #print(streaming_dict)
         ret, frame = cap.read()  # prendiamo i singoli frame
+        if replace_stream == "normal_stream":
+            streaming_dict[link] = frame
         if not ret:
             print("Stream broken")
             break
         new_frame = frame
-        replace = frame  # frame per fare la PiP mode
+        try:
+            print(link)
+            if link != "":
+                replace = streaming_dict[link]  # frame per fare la PiP mode
+            else:
+                replace = frame
+        except Exception:
+            replace = frame
         imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
         corners, ids, rejected = detector.detectMarkers(frame)  # vertici, id
         if ids is not None:  # se la variabile ids è none significa che non è stato trovato nessun aruco valido
@@ -119,29 +129,35 @@ def get_stream(cap):
 
 
 @app.get("/stream/")
-async def video_feed_test(link: str = None):
+async def video_feed_test(link: str = None, replace: str = None):
     # andrebbero aggiunti controlli più stringenti per esempio una regex per verificare
     # che sia un link effettivamente valido, ma per ora ci va bene così
     if link is None or link == "":
         return "Link invalido"
-    print(link)
+    #print(link)
     # apriamo con opencv il link
     cap = cv.VideoCapture(link)
     # ritorniamo lo streaming modificato
     return StreamingResponse(
-        get_stream(cap), media_type="multipart/x-mixed-replace; boundary=frame"
+        get_stream(cap, replace, ""), media_type="multipart/x-mixed-replace; boundary=frame"
     )
 
 @app.get("/startstream/")
 async def new_stream(link: str = None):
+    global streaming_dict
+    #data = await request.json()
+    #link = data["link"]
     streaming_dict[link] = ""
     cap = cv.VideoCapture(link)
-    while cap.isOpened():
+    return StreamingResponse(
+        get_stream(cap, "normal_stream", link), media_type="multipart/x-mixed-replace; boundary=frame"
+    )
+    """ while cap.isOpened():
         ret, frame = cap.read()  # prendiamo i singoli frame
         streaming_dict[link] = frame
         if not ret:
             print("Stream broken")
-            break
+            break """
 
 
 @app.post("/image/")
@@ -159,7 +175,7 @@ async def image_feed_test(request: Request):
     nparr = np.array(image)
     frame = nparr
     frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
-    replace = frame
+    replace = streaming_dict[stream]
     """ if stream == "":
         replace = frame  # frame per fare la PiP mode
     else:
