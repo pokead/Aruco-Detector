@@ -20,8 +20,9 @@ streamBtn.addEventListener('click', async () => {
   //console.log('/api/streaming?stream=' + encodedStreamUrl)
   //console.log(data)
   document.getElementById('result').src = "http://127.0.0.1:8000/stream/?link=" + encodedStreamUrl
-
+  console.log("a")
   document.getElementById('fake').src = 'http://127.0.0.1:8000/startstream/?link=' + replace
+  console.log("b")
   /* fetch('http://127.0.0.1:8000/startstream/?link=' + replace, {
     method: 'GET',
     headers: {

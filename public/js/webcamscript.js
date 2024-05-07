@@ -1,6 +1,7 @@
 let video = document.querySelector('video')
 let canvas = document.getElementsByClassName('real')[0]
 let fake = document.getElementsByClassName('fake')[0]
+let fake2 = document.getElementsByClassName('fake2')[0]
 const webcamBtn = document.getElementById('webcambtn') 
 const chooseStreaming = document.getElementById("streaming")
 
@@ -11,7 +12,8 @@ webcamBtn.addEventListener('click', async () => {
         .then(function (stream) {
             let user_stream = chooseStreaming.value
             let encodedStreamUrl = encodeURIComponent(stream);
-            fetch('http://127.0.0.1:8000/startstream', {
+            //document.getElementById('fake2').src = 'http://127.0.0.1:8000/startstream/?link=' + encodedStreamUrl
+            /* fetch('http://127.0.0.1:8000/startstream', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -22,7 +24,7 @@ webcamBtn.addEventListener('click', async () => {
                     {
                         link: user_stream
                     }),
-            })
+            }) */
 
             //let encodedStreamUrl = encodeURIComponent(stream);
             video.srcObject = stream
@@ -77,7 +79,7 @@ webcamBtn.addEventListener('click', async () => {
                         console.log(error)
                       })
                     //console.log(await response.json())
-                }, 41)
+                }, 60)//41)
     
             }
         })

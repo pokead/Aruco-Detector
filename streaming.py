@@ -57,6 +57,7 @@ detector = cv.aruco.ArucoDetector(dictionary=dictionary, detectorParams=params)
 def get_stream(cap, replace_stream, link):
     while cap.isOpened():
         #print(streaming_dict)
+        link = replace_stream
         ret, frame = cap.read()  # prendiamo i singoli frame
         if replace_stream == "normal_stream":
             streaming_dict[link] = frame
@@ -65,9 +66,10 @@ def get_stream(cap, replace_stream, link):
             break
         new_frame = frame
         try:
-            print(link)
-            if link != "":
-                replace = streaming_dict[link]  # frame per fare la PiP mode
+            if replace_stream != "":
+                #print(replace_stream)
+                replace = streaming_dict[link] 
+            #print(link)
             else:
                 replace = frame
         except Exception:
@@ -128,6 +130,15 @@ def get_stream(cap, replace_stream, link):
         yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
 
 
+def normal_stream(cap, link):
+    
+    while cap.isOpened():
+        ret, frame = cap.read()
+        streaming_dict[link] = frame
+        frame = cv.imencode(".jpg", frame)[1].tobytes()
+        # poi facciamo un bello yield del frame
+        yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+
 @app.get("/stream/")
 async def video_feed_test(link: str = None, replace: str = None):
     # andrebbero aggiunti controlli più stringenti per esempio una regex per verificare
@@ -150,7 +161,7 @@ async def new_stream(link: str = None):
     streaming_dict[link] = ""
     cap = cv.VideoCapture(link)
     return StreamingResponse(
-        get_stream(cap, "normal_stream", link), media_type="multipart/x-mixed-replace; boundary=frame"
+        normal_stream(cap, link), media_type="multipart/x-mixed-replace; boundary=frame"
     )
     """ while cap.isOpened():
         ret, frame = cap.read()  # prendiamo i singoli frame
@@ -175,7 +186,7 @@ async def image_feed_test(request: Request):
     nparr = np.array(image)
     frame = nparr
     frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
-    replace = streaming_dict[stream]
+    replace = frame #streaming_dict[stream]
     """ if stream == "":
         replace = frame  # frame per fare la PiP mode
     else:
