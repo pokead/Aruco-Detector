@@ -39,12 +39,14 @@
     </ul>
     <!--FINE NAVBAR + SIDENAV-->
     <!--Scegli file-->
+    <div class="header-custom">
     <div class="container">
       <br>
       <br>
       <br>
           <h6 style="margin-top: 30px;">Servizio che permette di rilevare Aruco usando la tua webcam</h6>
-        <div class="row" style="margin-top: 10px;">
+          <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Incolla l'URL della webcam:</h4>
+            <div class="row" style="margin-top: 10px;">
             <video src="" style="display: none;"></video>
             <h6 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Incolla l'URL della stream da sovrapporre (se non viene inserito nessun url si verificherà una PiP):</h6>  
             <input type="url" id="streaming" name="streaming" class="col s12 m12 l10" />
@@ -53,8 +55,11 @@
             <canvas class="fake" style="display: none;"></canvas>
             <canvas class="fake2" style="display: none;"></canvas>
         </div>
+        <div class="row" style="margin-top: 10px;">
+      <div class="col l6 m6 s12 offset-l6 offset-m6"><img style="width: 100%" src="./img/ciao.jpg" id="result"></div>
+     </div>
     </div>
-
+  </div>
     <!--FOOTER-->
     <footer class="page-footer">
       <div class="container">

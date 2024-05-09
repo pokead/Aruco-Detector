@@ -2948,6 +2948,9 @@ ul.staggered-list li {
   padding-top: 20px;
   color: #fff;
   background-color: #022326;
+  width: 100%;
+  bottom: 0;
+  height:250px;
 }
 
 .page-footer .footer-copyright {

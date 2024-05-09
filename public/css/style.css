@@ -6,6 +6,7 @@
 
 .header-custom {
     text-align: center;
+    min-height: calc(100vh - 250px);
 }
 body {
     background: url('../img/background_center.jpg');
