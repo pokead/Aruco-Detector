@@ -66,13 +66,16 @@ def get_stream(cap, replace_stream, link):
             break
         new_frame = frame
         try:
-            if replace_stream != "":
-                #print(replace_stream)
+            print(streaming_dict[link])
+            if replace_stream != "" and streaming_dict[link] != "":
+                print(streaming_dict[link])
                 replace = streaming_dict[link] 
             #print(link)
             else:
+                print("mmmm")
                 replace = frame
-        except Exception:
+        except Exception as e:
+            print(e)
             replace = frame
         imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
         corners, ids, rejected = detector.detectMarkers(frame)  # vertici, id
@@ -131,8 +134,9 @@ def get_stream(cap, replace_stream, link):
 
 
 def normal_stream(cap, link):
-    
+    #print("es")
     while cap.isOpened():
+       # print("aaaa")
         ret, frame = cap.read()
         streaming_dict[link] = frame
         frame = cv.imencode(".jpg", frame)[1].tobytes()
@@ -141,6 +145,7 @@ def normal_stream(cap, link):
 
 @app.get("/stream/")
 async def video_feed_test(link: str = None, replace: str = None):
+    print(link, replace)
     # andrebbero aggiunti controlli più stringenti per esempio una regex per verificare
     # che sia un link effettivamente valido, ma per ora ci va bene così
     if link is None or link == "":
