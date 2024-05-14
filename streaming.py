@@ -66,18 +66,22 @@ def get_stream(cap, replace_stream, link):
             break
         new_frame = frame
         try:
-            print(streaming_dict[link])
-            if replace_stream != "" and streaming_dict[link] != "":
-                print(streaming_dict[link])
-                replace = streaming_dict[link] 
+            #print(streaming_dict[link])
+            if replace_stream != "":
+                #print(streaming_dict[link])
+                replace = streaming_dict[link]
             #print(link)
             else:
                 print("mmmm")
                 replace = frame
         except Exception as e:
-            print(e)
+            print("errore: ", e)
             replace = frame
-        imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
+        try:
+            imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
+        except Exception:
+            replace = frame
+            imgheight, imgwidth = replace.shape[:2] 
         corners, ids, rejected = detector.detectMarkers(frame)  # vertici, id
         if ids is not None:  # se la variabile ids è none significa che non è stato trovato nessun aruco valido
             for i in range(len(ids)):
