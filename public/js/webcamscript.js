@@ -12,7 +12,7 @@ webcamBtn.addEventListener('click', async () => {
         .then(function (stream) {
             let user_stream = chooseStreaming.value
             let encodedStreamUrl = encodeURIComponent(stream);
-            //document.getElementById('fake2').src = 'http://127.0.0.1:8000/startstream/?link=' + encodedStreamUrl
+            fake2.src = 'http://127.0.0.1:8000/startstream/?link=' + user_stream
             /* fetch('http://127.0.0.1:8000/startstream', {
                 method: 'POST',
                 headers: {

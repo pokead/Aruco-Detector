@@ -195,7 +195,8 @@ async def image_feed_test(request: Request):
     nparr = np.array(image)
     frame = nparr
     frame = cv.cvtColor(frame, cv.COLOR_RGB2BGR)
-    replace = frame #streaming_dict[stream]
+    replace = streaming_dict[stream]
+    #replace = frame #streaming_dict[stream]
     """ if stream == "":
         replace = frame  # frame per fare la PiP mode
     else:
@@ -210,7 +211,11 @@ async def image_feed_test(request: Request):
                 return
             replace = stream_frame
             cap.release() """
-    imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
+    try:
+        imgheight, imgwidth = replace.shape[:2]  # dimensione del frame
+    except Exception:
+        replace = frame
+        imgheight, imgwidth = replace.shape[:2]
     corners, ids, rejected = detector.detectMarkers(frame)  # vertici, id
     if ids is not None:  # se la variabile ids è none significa che non è stato trovato nessun aruco valido
         for i in range(len(ids)):
