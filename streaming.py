@@ -246,12 +246,12 @@ async def image_feed_test(request: Request):
                 print(corners[i][0][0] * 10)
                 pts2 = np.float32(
                     [
-                        corners[i][0][0],
-                        corners[i][0][1],
-                        corners[i][0][3],
-                        corners[i][0][2],
+                        (corners[i][0][0][0] - 50, corners[i][0][0][1] - 50),
+                        (corners[i][0][1][0] + 50, corners[i][0][1][1] - 50),
+                        (corners[i][0][3][0] - 50, corners[i][0][3][1] + 50),
+                        (corners[i][0][2][0] + 50, corners[i][0][2][1] + 50),
                     ]
-                )
+                ) 
                 """ print(corners[i][0][0], corners[i][0][0] * 10)
                 print(corners[i][0][1], corners[i][0][1] * 10)
                 print(corners[i][0][3], corners[i][0][3] * 10)
@@ -274,6 +274,12 @@ async def image_feed_test(request: Request):
                 #print(frame.shape)
                 mask2 = np.zeros(frame.shape, dtype=np.uint8)
                 roi_corners2 = np.int32(corners[i][0])
+                """ roi_corners2 = np.int32([
+                        (corners[i][0][0][0] - 50, corners[i][0][0][1] - 50),
+                        (corners[i][0][1][0] + 50, corners[i][0][1][1] - 50),
+                        (corners[i][0][2][0] + 50, corners[i][0][2][1] + 50),
+                        (corners[i][0][3][0] - 50, corners[i][0][3][1] + 50),
+                    ]) """
                 channel_count2 = frame.shape[2]
                 ignore_mask_color2 = (255,) * channel_count2
                 # creiamo una figura nera sull'aruco perchè con opencv non è direttamente piazzabile un'immagine sopra un'altra
