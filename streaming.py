@@ -72,7 +72,8 @@ def get_stream(cap, replace_stream, link):
                 replace = streaming_dict[link]
             #print(link)
             else:
-                print("mmmm")
+                pass
+                #print("mmmm")
                 replace = frame
         except Exception as e:
             print("errore: ", e)
@@ -149,7 +150,7 @@ def normal_stream(cap, link):
 
 @app.get("/stream/")
 async def video_feed_test(link: str = None, replace: str = None):
-    print(link, replace)
+    #print(link, replace)
     # andrebbero aggiunti controlli più stringenti per esempio una regex per verificare
     # che sia un link effettivamente valido, ma per ora ci va bene così
     if link is None or link == "":
@@ -185,7 +186,7 @@ async def image_feed_test(request: Request):
     #if image is None:
     #    return "Immagine non valida"
     data = await request.json()
-    print(data)
+    #print(data)
     #print(data["image"])
     image = data["image"].replace("data:image/jpeg;base64,", "")
     stream = data["replace"]
@@ -242,7 +243,7 @@ async def image_feed_test(request: Request):
                     [[0, 0], [imgwidth, 0], [0, imgheight], [imgwidth, imgheight]]
                 )
                 # vertici aruco
-                #print(corners[i][0][0] * 10)
+                print(corners[i][0][0] * 10)
                 pts2 = np.float32(
                     [
                         corners[i][0][0],
@@ -251,13 +252,26 @@ async def image_feed_test(request: Request):
                         corners[i][0][2],
                     ]
                 )
+                """ print(corners[i][0][0], corners[i][0][0] * 10)
+                print(corners[i][0][1], corners[i][0][1] * 10)
+                print(corners[i][0][3], corners[i][0][3] * 10)
+                print(corners[i][0][2], corners[i][0][2] * 10)
+                pts2 = np.float32(
+                    [
+                        (corners[i][0][0][0] - 50, corners[i][0][0][1] - 50),
+                        (corners[i][0][1][0] + 50, corners[i][0][1][1] - 50),
+                        (corners[i][0][3][0] - 50, corners[i][0][3][1] + 50),
+                        (corners[i][0][2][0] + 50, corners[i][0][2][1] + 50),
+                    ]
+                ) """
                 # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere
                 homography, mask = cv.findHomography(pts1, pts2, cv.RANSAC, 5.0)
+                
                 #cv.resize(homography, ())
                 # homography = cv.getPerspectiveTransform(pts1, pts2)
                 # creiamo una matrice con i vertici messi in prospettiva per l'immagine
                 warpedMat = cv.warpPerspective(replace, homography, (width, height))
-                print(frame.shape)
+                #print(frame.shape)
                 mask2 = np.zeros(frame.shape, dtype=np.uint8)
                 roi_corners2 = np.int32(corners[i][0])
                 channel_count2 = frame.shape[2]
@@ -343,7 +357,7 @@ async def image_aruco(file: UploadFile, file1: UploadFile):
                 # homography = cv.getPerspectiveTransform(pts1, pts2)
                 # creiamo una matrice con i vertici messi in prospettiva per l'immagine
                 warpedMat = cv.warpPerspective(replace, homography, (width, height))
-                print(frame.shape)
+                #print(frame.shape)
                 mask2 = np.zeros(frame.shape, dtype=np.uint8)
                 roi_corners2 = np.int32(corners[i][0])
                 channel_count2 = frame.shape[2]
