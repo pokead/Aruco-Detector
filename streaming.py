@@ -117,13 +117,33 @@ def get_stream(cap, replace_stream, link):
                             corners[i][0][2],
                         ]
                     )
+                    center = np.mean(pts2, axis=0)
+                    translated_matrix = pts2 - center
+                    scaled_translated_matrix = translated_matrix * 2.5
+                    pts2 = scaled_translated_matrix + center
+                    print(pts2)
+                    #pts2 = pts2 * 2
+
+                    roi_corners2 = np.int32(
+                        [
+                            corners[i][0][0],
+                            corners[i][0][1],
+                            corners[i][0][2],
+                            corners[i][0][3],
+                        ]
+                    )
+                    center = np.mean(roi_corners2, axis=0)
+                    translated_matrix = roi_corners2 - center
+                    scaled_translated_matrix = translated_matrix * 2.5
+                    roi_corners2 = scaled_translated_matrix + center
+                    roi_corners2 = np.int32(roi_corners2)
                     # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere
                     homography, mask = cv.findHomography(pts1, pts2, cv.RANSAC, 5.0)
                     # homography = cv.getPerspectiveTransform(pts1, pts2)
                     # creiamo una matrice con i vertici messi in prospettiva per l'immagine
                     warpedMat = cv.warpPerspective(replace, homography, (width, height))
                     mask2 = np.zeros(frame.shape, dtype=np.uint8)
-                    roi_corners2 = np.int32(corners[i][0])
+                    #roi_corners2 = np.int32(corners[i][0])
                     channel_count2 = frame.shape[2]
                     ignore_mask_color2 = (255,) * channel_count2
                     # creiamo una figura nera sull'aruco perchè con opencv non è direttamente piazzabile un'immagine sopra un'altra
@@ -221,6 +241,7 @@ async def image_feed_test(request: Request):
     if ids is not None:  # se la variabile ids è none significa che non è stato trovato nessun aruco valido
         for i in range(len(ids)):
             if len(corners) != 0:
+                
                 for corner in range(4):
                     # disegna il quadrato sull'aruco (in modi molto discutibili)
                     frame = cv.line(
@@ -246,40 +267,44 @@ async def image_feed_test(request: Request):
                 print(corners[i][0][0] * 10)
                 pts2 = np.float32(
                     [
-                        (corners[i][0][0][0] - 50, corners[i][0][0][1] - 50),
-                        (corners[i][0][1][0] + 50, corners[i][0][1][1] - 50),
-                        (corners[i][0][3][0] - 50, corners[i][0][3][1] + 50),
-                        (corners[i][0][2][0] + 50, corners[i][0][2][1] + 50),
+                        corners[i][0][0],
+                        corners[i][0][1],
+                        corners[i][0][3],
+                        corners[i][0][2],
                     ]
-                ) 
-                """ print(corners[i][0][0], corners[i][0][0] * 10)
-                print(corners[i][0][1], corners[i][0][1] * 10)
-                print(corners[i][0][3], corners[i][0][3] * 10)
-                print(corners[i][0][2], corners[i][0][2] * 10)
-                pts2 = np.float32(
+                )
+                center = np.mean(pts2, axis=0)
+                translated_matrix = pts2 - center
+                scaled_translated_matrix = translated_matrix * 2.5
+                pts2 = scaled_translated_matrix + center
+
+                roi_corners2 = np.int32(
                     [
-                        (corners[i][0][0][0] - 50, corners[i][0][0][1] - 50),
-                        (corners[i][0][1][0] + 50, corners[i][0][1][1] - 50),
-                        (corners[i][0][3][0] - 50, corners[i][0][3][1] + 50),
-                        (corners[i][0][2][0] + 50, corners[i][0][2][1] + 50),
+                        corners[i][0][0],
+                        corners[i][0][1],
+                        corners[i][0][2],
+                        corners[i][0][3],
                     ]
-                ) """
+                )
+                center = np.mean(roi_corners2, axis=0)
+                translated_matrix = roi_corners2 - center
+                scaled_translated_matrix = translated_matrix * 2.5
+                roi_corners2 = scaled_translated_matrix + center
+                roi_corners2 = np.int32(roi_corners2)
                 # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere
                 homography, mask = cv.findHomography(pts1, pts2, cv.RANSAC, 5.0)
                 
                 #cv.resize(homography, ())
                 # homography = cv.getPerspectiveTransform(pts1, pts2)
                 # creiamo una matrice con i vertici messi in prospettiva per l'immagine
+                #warpedMat = cv.warpPerspective(replace, homography, (width, height), dst=frame)
+                #cv.imwrite("warped.jpg", warpedMat)
                 warpedMat = cv.warpPerspective(replace, homography, (width, height))
+                #cv.imwrite("warped.jpg", warpedMat)
+                #warpedMat = cv.resize(warpedMat, (0,0), fx=2, fy=2)
+                #cv.imwrite("test.jpg", test)
                 #print(frame.shape)
                 mask2 = np.zeros(frame.shape, dtype=np.uint8)
-                roi_corners2 = np.int32(corners[i][0])
-                """ roi_corners2 = np.int32([
-                        (corners[i][0][0][0] - 50, corners[i][0][0][1] - 50),
-                        (corners[i][0][1][0] + 50, corners[i][0][1][1] - 50),
-                        (corners[i][0][2][0] + 50, corners[i][0][2][1] + 50),
-                        (corners[i][0][3][0] - 50, corners[i][0][3][1] + 50),
-                    ]) """
                 channel_count2 = frame.shape[2]
                 ignore_mask_color2 = (255,) * channel_count2
                 # creiamo una figura nera sull'aruco perchè con opencv non è direttamente piazzabile un'immagine sopra un'altra
@@ -357,6 +382,26 @@ async def image_aruco(file: UploadFile, file1: UploadFile):
                         corners[i][0][2],
                     ]
                 )
+                print(pts2)
+                center = np.mean(pts2, axis=0)
+                translated_matrix = pts2 - center
+                scaled_translated_matrix = translated_matrix * 1.5
+                pts2 = scaled_translated_matrix + center
+                print(pts2)
+                roi_corners2 = np.int32(
+                    [
+                        corners[i][0][0],
+                        corners[i][0][1],
+                        corners[i][0][2],
+                        corners[i][0][3],
+                    ]
+                )
+                center = np.mean(roi_corners2, axis=0)
+                translated_matrix = roi_corners2 - center
+                scaled_translated_matrix = translated_matrix * 1.5
+                roi_corners2 = scaled_translated_matrix + center
+                roi_corners2 = np.int32(roi_corners2)
+
                 # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere
                 homography, mask = cv.findHomography(pts1, pts2, cv.RANSAC, 5.0)
                 #cv.resize(homography, ())
@@ -365,7 +410,7 @@ async def image_aruco(file: UploadFile, file1: UploadFile):
                 warpedMat = cv.warpPerspective(replace, homography, (width, height))
                 #print(frame.shape)
                 mask2 = np.zeros(frame.shape, dtype=np.uint8)
-                roi_corners2 = np.int32(corners[i][0])
+                #roi_corners2 = np.int32(corners[i][0])
                 channel_count2 = frame.shape[2]
                 ignore_mask_color2 = (255,) * channel_count2
                 # creiamo una figura nera sull'aruco perchè con opencv non è direttamente piazzabile un'immagine sopra un'altra
@@ -386,6 +431,7 @@ async def image_aruco(file: UploadFile, file1: UploadFile):
 
 @app.post("/test")
 async def test(request: Request):
+
     return {"message": "test"}
 
 # eseguiamo il server
