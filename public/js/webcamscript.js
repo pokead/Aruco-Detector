@@ -4,6 +4,7 @@ let fake = document.getElementsByClassName('fake')[0]
 let fake2 = document.getElementsByClassName('fake2')[0]
 const webcamBtn = document.getElementById('webcambtn') 
 const chooseStreaming = document.getElementById("streaming")
+const arucoSlider = document.getElementById("ArucoSlider")
 
 webcamBtn.addEventListener('click', async () => {
     if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
@@ -51,7 +52,8 @@ webcamBtn.addEventListener('click', async () => {
                     //    }
                     //).then(function (res) { console.log(res)})
                     //console.log("http://127.0.0.1:8000/image/?image="+encodeURI(canvas.toDataURL('image/jpeg')))
-                    
+                    const size = arucoSlider.value
+                    console.log(size)
                     fetch('http://127.0.0.1:8000/image', {
                         method: 'POST',
                         headers: {
@@ -63,7 +65,8 @@ webcamBtn.addEventListener('click', async () => {
                             {
                                 image: fake.toDataURL('image/jpeg'),
                                 replace: user_stream,
-                                replace_type: "stream"
+                                replace_type: "stream",
+                                size: size
                             }),
                     }).then(response => {
                         return response.json();

@@ -54,7 +54,7 @@ detector = cv.aruco.ArucoDetector(dictionary=dictionary, detectorParams=params)
 # imgheight, imgwidth = replace.shape[:2]
 
 
-def get_stream(cap, replace_stream, link):
+def get_stream(cap, replace_stream, link, aruco_size):
     while cap.isOpened():
         #print(streaming_dict)
         link = replace_stream
@@ -119,9 +119,9 @@ def get_stream(cap, replace_stream, link):
                     )
                     center = np.mean(pts2, axis=0)
                     translated_matrix = pts2 - center
-                    scaled_translated_matrix = translated_matrix * 2.5
+                    scaled_translated_matrix = translated_matrix * aruco_size
                     pts2 = scaled_translated_matrix + center
-                    print(pts2)
+                    #print(pts2)
                     #pts2 = pts2 * 2
 
                     roi_corners2 = np.int32(
@@ -134,7 +134,7 @@ def get_stream(cap, replace_stream, link):
                     )
                     center = np.mean(roi_corners2, axis=0)
                     translated_matrix = roi_corners2 - center
-                    scaled_translated_matrix = translated_matrix * 2.5
+                    scaled_translated_matrix = translated_matrix * aruco_size
                     roi_corners2 = scaled_translated_matrix + center
                     roi_corners2 = np.int32(roi_corners2)
                     # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere
@@ -169,8 +169,8 @@ def normal_stream(cap, link):
         yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
 
 @app.get("/stream/")
-async def video_feed_test(link: str = None, replace: str = None):
-    #print(link, replace)
+async def video_feed_test(link: str = None, replace: str = None, size: int = 1):
+    print(link, replace, size)
     # andrebbero aggiunti controlli più stringenti per esempio una regex per verificare
     # che sia un link effettivamente valido, ma per ora ci va bene così
     if link is None or link == "":
@@ -180,7 +180,7 @@ async def video_feed_test(link: str = None, replace: str = None):
     cap = cv.VideoCapture(link)
     # ritorniamo lo streaming modificato
     return StreamingResponse(
-        get_stream(cap, replace, ""), media_type="multipart/x-mixed-replace; boundary=frame"
+        get_stream(cap, replace, "", size), media_type="multipart/x-mixed-replace; boundary=frame"
     )
 
 @app.get("/startstream/")
@@ -206,10 +206,12 @@ async def image_feed_test(request: Request):
     #if image is None:
     #    return "Immagine non valida"
     data = await request.json()
+    
     #print(data)
     #print(data["image"])
     image = data["image"].replace("data:image/jpeg;base64,", "")
     stream = data["replace"]
+    size = int(data["size"])
     image = base64.b64decode(image)
     image = io.BytesIO(image)
     image = open(image)
@@ -242,6 +244,7 @@ async def image_feed_test(request: Request):
         for i in range(len(ids)):
             if len(corners) != 0:
                 
+                
                 for corner in range(4):
                     # disegna il quadrato sull'aruco (in modi molto discutibili)
                     frame = cv.line(
@@ -273,9 +276,10 @@ async def image_feed_test(request: Request):
                         corners[i][0][2],
                     ]
                 )
+                
                 center = np.mean(pts2, axis=0)
                 translated_matrix = pts2 - center
-                scaled_translated_matrix = translated_matrix * 2.5
+                scaled_translated_matrix = translated_matrix * size
                 pts2 = scaled_translated_matrix + center
 
                 roi_corners2 = np.int32(
@@ -288,7 +292,7 @@ async def image_feed_test(request: Request):
                 )
                 center = np.mean(roi_corners2, axis=0)
                 translated_matrix = roi_corners2 - center
-                scaled_translated_matrix = translated_matrix * 2.5
+                scaled_translated_matrix = translated_matrix * size
                 roi_corners2 = scaled_translated_matrix + center
                 roi_corners2 = np.int32(roi_corners2)
                 # qui si entra in teoria della computer vision che non ho nemmeno voglia di leggere

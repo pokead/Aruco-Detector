@@ -50,7 +50,9 @@
             <video src="" style="display: none;"></video>
             <h6 style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Incolla l'URL della stream da sovrapporre (se non viene inserito nessun url si verificherà una PiP):</h6>  
             <input type="url" id="streaming" name="streaming" class="col s12 m12 l10" />
-            <button class="waves-effect waves-light btn teal darken-4 col s12 m4 l2 offset-m4" id="webcambtn">Avvia webcam</button>  
+            <button class="waves-effect waves-light btn teal darken-4 col s12 m4 l2 offset-m4" id="webcambtn">Avvia webcam</button> 
+            <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 400;" class="col s12">Scegli la grandezza del frame da incollare:</h4>
+            <input type="range" min="1" max="10" value="1" id="ArucoSlider"> 
             <canvas class="real"></canvas>
             <canvas class="fake" style="display: none;"></canvas>
             <img src="" style="width: 100%; display: none;" class="fake2">
