@@ -82,7 +82,7 @@ webcamBtn.addEventListener('click', async () => {
                         console.log(error)
                       })
                     //console.log(await response.json())
-                }, 60)//41)
+                }, 41)//41)
     
             }
         })
