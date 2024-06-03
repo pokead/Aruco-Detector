@@ -14,20 +14,6 @@ webcamBtn.addEventListener('click', async () => {
             let user_stream = chooseStreaming.value
             let encodedStreamUrl = encodeURIComponent(stream);
             fake2.src = 'http://127.0.0.1:8000/startstream/?link=' + user_stream
-            /* fetch('http://127.0.0.1:8000/startstream', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    //'Access-Control-Allow-Origin': "*"
-                },
-                //mode: "no-cors",
-                body: JSON.stringify(
-                    {
-                        link: user_stream
-                    }),
-            }) */
-
-            //let encodedStreamUrl = encodeURIComponent(stream);
             video.srcObject = stream
             video.onloadedmetadata = function(e) {
                 video.play()
@@ -43,15 +29,6 @@ webcamBtn.addEventListener('click', async () => {
                     //console.log(canvas.toDataURL('image/jpeg'))
                     fake.getContext('2d').drawImage(
                         video, 0, 0, fake.width, fake.height)
-                    //canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
-                    //console.log(canvas.toDataURL('image/jpeg'))
-                    //fetch(
-                    //    "http://127.0.0.1:8000/image/?image="+(canvas.toDataURL('image/jpeg')),
-                    //    {
-                    //        method: "GET"
-                    //    }
-                    //).then(function (res) { console.log(res)})
-                    //console.log("http://127.0.0.1:8000/image/?image="+encodeURI(canvas.toDataURL('image/jpeg')))
                     const size = arucoSlider.value
                     console.log(size)
                     fetch('http://127.0.0.1:8000/image', {
@@ -65,7 +42,6 @@ webcamBtn.addEventListener('click', async () => {
                             {
                                 image: fake.toDataURL('image/jpeg'),
                                 replace: user_stream,
-                                replace_type: "stream",
                                 size: size
                             }),
                     }).then(response => {

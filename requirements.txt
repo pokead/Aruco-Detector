@@ -2,3 +2,5 @@ opencv-python-headless
 fastapi
 uvicorn
 pillow
+uvloop
+loguru

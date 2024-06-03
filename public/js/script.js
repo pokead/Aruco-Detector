@@ -37,7 +37,7 @@ uploadBtn.addEventListener('click', async () => {
   if (file){
     const formData = new FormData()
     formData.append('file', file)
-    formData.append('file1', file1)
+    formData.append('replace', file1)
     console.log(formData)
     try {
       const { data } = await axios.post('http://127.0.0.1:8000/imagearuco', formData, {
@@ -46,9 +46,9 @@ uploadBtn.addEventListener('click', async () => {
   
       console.log(data)
       document.getElementById('result').src = data.buffer
-      const div = document.getElementById("corners")
-      div.getElementsByTagName("p")[0].innerHTML = JSON.stringify(data.markers)
-      document.getElementById("corners").style.visibility = "visible"
+      //const div = document.getElementById("corners")
+      //div.getElementsByTagName("p")[0].innerHTML = JSON.stringify(data.markers)
+      //document.getElementById("corners").style.visibility = "visible"
 
 
     } catch (error) {

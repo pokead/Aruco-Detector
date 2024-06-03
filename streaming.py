@@ -170,6 +170,7 @@ def normal_stream(cap, link):
         frame = cv.imencode(".jpg", frame)[1].tobytes()
         # poi facciamo un bello yield del frame
         yield (b"--frame\r\n" b"Content-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
+    
 
 @app.get("/stream/")
 async def video_feed_test(link: str = None, replace: str = None, size: int = 1):
